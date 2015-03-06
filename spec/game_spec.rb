@@ -42,6 +42,13 @@ describe Game do
     expect(game).to have_player_two
   end
 
+  it 'cannot add players if it already has two players' do
+    game.add_player(:player_one)
+    game.add_player(:player_two)
+
+    expect{game.add_player(:player_three)}.to raise_error(FullGameError, 'The game is full!')
+  end
+
   it 'knows when it has two players' do
     game.add_player(:player_one)
     game.add_player(:player_two)

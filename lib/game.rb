@@ -1,3 +1,5 @@
+require_relative 'exceptions'
+
 class Game
   attr_writer :grid
 
@@ -10,6 +12,7 @@ class Game
   end
 
   def add_player(player)
+    raise FullGameError if has_two_players?
     has_player_one? ? add_player_two(player) : add_player_one(player)
   end
 
