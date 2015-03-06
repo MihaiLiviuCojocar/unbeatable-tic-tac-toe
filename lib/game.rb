@@ -4,4 +4,7 @@ class Game
   def has_grid?
     !@grid.nil?
   end
+
+  def has_two_players?
+  end
 end

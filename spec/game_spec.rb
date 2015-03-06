@@ -12,4 +12,8 @@ describe Game do
 
     expect(game).to have_grid
   end
+
+  it 'has no players when created' do
+    expect(game).not_to have_two_players
+  end
 end
