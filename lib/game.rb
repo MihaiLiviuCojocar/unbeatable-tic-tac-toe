@@ -1,6 +1,8 @@
 require_relative 'exceptions'
 
 class Game
+  WINNER = Proc.new{ |player| player.winner? }
+
   attr_writer :grid
 
   def has_grid?
@@ -42,7 +44,7 @@ class Game
   end
 
   def winner
-    players.select{ |player| player.winner? }.first
+    players.select(&WINNER).first
   end
 
   private
