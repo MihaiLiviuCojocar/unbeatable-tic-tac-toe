@@ -33,10 +33,12 @@ class Game
   end
 
   def switch_turns
+    raise GameOverError.new(winner.name) if over?
     @current_player = current_player == @player_one ? @player_two : @player_one
   end
 
   def over?
+     has_two_players? and has_winner?
   end
 
   def winner
@@ -55,5 +57,9 @@ class Game
 
   def players
     [@player_one, @player_two]
+  end
+
+  def has_winner?
+    !winner.nil?
   end
 end

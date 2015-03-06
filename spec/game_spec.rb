@@ -68,9 +68,14 @@ describe Game do
   end
 
   it 'can switch turns' do
-    game_ready.switch_turns
+    player_one = double :player, winner?: false
+    player_two = double :player, winner?: false
+    game.add_player(player_one)
+    game.add_player(player_two)
 
-    expect(game_ready.current_player).to eq(:player_two)
+    game.switch_turns
+
+    expect(game.current_player).to eq(player_two)
   end
 
   it 'knows that player one can be the winner' do
@@ -89,5 +94,23 @@ describe Game do
     game.add_player(player_two)
 
     expect(game.winner).to eq(player_two)
+  end
+
+  it 'is over if there is a winner' do
+    player_one = double :player, winner?: false
+    player_two = double :player, winner?: true
+    game.add_player(player_one)
+    game.add_player(player_two)
+
+    expect(game).to be_over
+  end
+
+  it 'cannot switch turns if there is a winner' do
+    player_one = double :player, winner?: true, name: 'Mihai'
+    player_two = double :player, winner?: false
+    game.add_player(player_one)
+    game.add_player(player_two)
+
+    expect{game.switch_turns}.to raise_error('Game over! Mihai wins!')
   end
 end
