@@ -29,4 +29,11 @@ describe Game do
 
     expect(game).to have_player_two
   end
+
+  it 'knows when it has two players' do
+    game.add_player(:player_one)
+    game.add_player(:player_two)
+
+    expect(game).to have_two_players
+  end
 end

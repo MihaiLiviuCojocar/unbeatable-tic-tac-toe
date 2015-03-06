@@ -6,6 +6,7 @@ class Game
   end
 
   def has_two_players?
+    has_player_one? and has_player_two?
   end
 
   def add_player(player)
