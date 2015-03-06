@@ -26,7 +26,11 @@ class Game
   end
 
   def current_player
-    @player_one
+    @current_player ||= @player_one
+  end
+
+  def switch_turns
+    @current_player = current_player == @player_one ? @player_two : @player_one
   end
 
   private

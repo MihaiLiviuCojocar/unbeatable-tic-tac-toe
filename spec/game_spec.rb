@@ -56,4 +56,10 @@ describe Game do
   it 'knows that player one has the first move' do
     expect(game_ready.current_player).to eq(:player_one)
   end
+
+  it 'can switch turns' do
+    game_ready.switch_turns
+
+    expect(game_ready.current_player).to eq(:player_two)
+  end
 end
