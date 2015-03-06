@@ -8,7 +8,6 @@ describe Game do
     game_ready.add_player(:player_one)
     game_ready.add_player(:player_two)
     game_ready.grid = :grid
-
   end
 
   it 'has no grid when created' do
@@ -50,7 +49,7 @@ describe Game do
     game.add_player(:player_one)
     game.add_player(:player_two)
 
-    expect{game.add_player(:player_three)}.to raise_error(FullGameError, 'The game is full!')
+    expect{game.add_player(:player_three)}.to raise_error(GameFullError, 'The game is full!')
   end
 
   it 'knows when it has two players' do

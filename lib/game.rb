@@ -12,7 +12,7 @@ class Game
   end
 
   def add_player(player)
-    raise FullGameError if has_two_players?
+    raise GameFullError if has_two_players?
     has_player_one? ? add_player_two(player) : add_player_one(player)
   end
 
