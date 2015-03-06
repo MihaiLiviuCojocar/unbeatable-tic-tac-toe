@@ -39,6 +39,10 @@ class Game
   def over?
   end
 
+  def winner
+    @player_one
+  end
+
   private
 
   def add_player_one(player)
