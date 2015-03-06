@@ -21,6 +21,9 @@ class Game
     !@player_two.nil?
   end
 
+  def ready_to_start?
+  end
+
   private
 
   def add_player_one(player)

@@ -7,6 +7,10 @@ describe Game do
     expect(game).not_to have_grid
   end
 
+  it 'is not ready when created' do
+    expect(game).not_to be_ready_to_start
+  end
+
   it 'can have a grid' do
     game.grid = :grid
 
