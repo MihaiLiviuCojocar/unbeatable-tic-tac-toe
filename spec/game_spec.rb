@@ -1,7 +1,15 @@
 require 'game'
 
 describe Game do
-  let(:game) { Game.new }
+  let(:game)       { Game.new }
+  let(:game_ready) { Game.new }
+
+  before(:each) do
+    game_ready.add_player(:player_one)
+    game_ready.add_player(:player_two)
+    game_ready.grid = :grid
+
+  end
 
   it 'has no grid when created' do
     expect(game).not_to have_grid
@@ -42,10 +50,10 @@ describe Game do
   end
 
   it 'is ready to start when it has a grid and two players' do
-    game.add_player(:player_one)
-    game.add_player(:player_two)
-    game.grid = :grid
+    expect(game_ready).to be_ready_to_start
+  end
 
-    expect(game).to be_ready_to_start
+  it 'knows that player one has the first move' do
+    expect(game_ready.current_player).to eq(:player_one)
   end
 end

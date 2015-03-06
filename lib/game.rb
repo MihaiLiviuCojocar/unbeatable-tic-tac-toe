@@ -25,6 +25,10 @@ class Game
     has_two_players? and has_grid?
   end
 
+  def current_player
+    @player_one
+  end
+
   private
 
   def add_player_one(player)
