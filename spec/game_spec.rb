@@ -6,4 +6,12 @@ describe Game do
 
     expect(game).not_to have_grid
   end
+
+  it 'can have a grid' do
+    game = Game.new
+
+    game.grid = :grid
+
+    expect(game).to have_grid
+  end
 end
