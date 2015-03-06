@@ -40,4 +40,12 @@ describe Game do
 
     expect(game).to have_two_players
   end
+
+  it 'is ready to start when it has a grid and two players' do
+    game.add_player(:player_one)
+    game.add_player(:player_two)
+    game.grid = :grid
+
+    expect(game).to be_ready_to_start
+  end
 end

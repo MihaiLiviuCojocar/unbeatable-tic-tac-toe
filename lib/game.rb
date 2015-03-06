@@ -22,6 +22,7 @@ class Game
   end
 
   def ready_to_start?
+    has_two_players? and has_grid?
   end
 
   private
