@@ -36,6 +36,9 @@ class Game
     @current_player = current_player == @player_one ? @player_two : @player_one
   end
 
+  def over?
+  end
+
   private
 
   def add_player_one(player)
