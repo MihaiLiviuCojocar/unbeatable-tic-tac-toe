@@ -22,4 +22,11 @@ describe Game do
 
     expect(game).to have_player_one
   end
+
+  it 'can add the second player' do
+    game.add_player(:player_one)
+    game.add_player(:player_two)
+
+    expect(game).to have_player_two
+  end
 end

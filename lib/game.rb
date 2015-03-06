@@ -9,10 +9,14 @@ class Game
   end
 
   def add_player(player)
-    @player_one = player
+    has_player_one? ? @player_two = player : @player_one = player
   end
 
   def has_player_one?
     !@player_one.nil?
+  end
+
+  def has_player_two?
+    !@player_two.nil?
   end
 end
