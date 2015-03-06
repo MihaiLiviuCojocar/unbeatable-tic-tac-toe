@@ -40,7 +40,7 @@ class Game
   end
 
   def winner
-    @player_one
+    players.select{ |player| player.winner? }.first
   end
 
   private
@@ -51,5 +51,9 @@ class Game
 
   def add_player_two(player)
     @player_two = player
+  end
+
+  def players
+    [@player_one, @player_two]
   end
 end

@@ -81,4 +81,13 @@ describe Game do
 
     expect(game.winner).to eq(player_one)
   end
+
+  it 'knwos that player two can be the winner' do
+    player_one = double :player, winner?: false
+    player_two = double :player, winner?: true
+    game.add_player(player_one)
+    game.add_player(player_two)
+
+    expect(game.winner).to eq(player_two)
+  end
 end
