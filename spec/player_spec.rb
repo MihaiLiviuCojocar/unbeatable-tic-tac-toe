@@ -1,10 +1,15 @@
 require 'player'
 
 describe Player do
-  let(:player) { Player.new(name: 'Mihai') }
+  let(:grid)   { double :grid                          }
+  let(:player) { Player.new(name: 'Mihai', grid: grid) }
 
   it 'has a name when created' do
     expect(player.name).to eq('Mihai')
+  end
+
+  it 'has a grid when created' do
+    expect(player.grid).to eq grid
   end
 
   it 'is not a winner when created' do
@@ -15,10 +20,5 @@ describe Player do
     player.marker = :cross
 
     expect(player.marker).to eq(:cross)
-  end
-
-  it 'can have a grid' do
-    player.grid = :grid
-    expect(player.grid).to eq :grid
   end
 end

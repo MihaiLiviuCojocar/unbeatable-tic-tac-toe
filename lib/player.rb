@@ -1,9 +1,10 @@
 class Player
-  attr_reader   :name
-  attr_accessor :marker, :grid
+  attr_reader   :name, :grid
+  attr_accessor :marker
 
   def initialize(options = {})
     @name = options.fetch(:name)
+    @grid = options.fetch(:grid)
   end
 
   def winner?
