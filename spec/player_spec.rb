@@ -21,4 +21,13 @@ describe Player do
 
     expect(player.marker).to eq(:cross)
   end
+
+  it 'can place his marker on the grid at a coordinate' do
+    coordinate    = :A1
+    player.marker = :zerro
+
+    expect(grid).to receive(:place_marker).with(at_coordinate: coordinate, marker: :zerro)
+
+    player.place_marker(coordinate)
+  end
 end

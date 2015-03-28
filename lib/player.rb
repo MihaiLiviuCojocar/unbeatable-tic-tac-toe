@@ -9,4 +9,8 @@ class Player
 
   def winner?
   end
+
+  def place_marker(coordinate)
+    grid.place_marker(at_coordinate: coordinate, marker: marker)
+  end
 end
