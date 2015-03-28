@@ -10,4 +10,15 @@ describe Grid do
     grid = Grid.new(size: 2)
     expect(grid.coordinates).to eq [:A1, :A2, :B1, :B2]
   end
+
+  it 'can get the content at a coordinate' do
+    grid = Grid.new(size: 3)
+    expect(grid.get_content(:B2)).to be nil
+  end
+
+  it 'can set the content at a coordinate' do
+    grid = Grid.new(size: 3)
+    grid.set_content(at_coordinate: :B3, content: :cell)
+    expect(grid.get_content(:B3)).to eq :cell
+  end
 end

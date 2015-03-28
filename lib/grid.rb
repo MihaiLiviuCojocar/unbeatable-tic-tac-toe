@@ -9,6 +9,14 @@ class Grid
     @matrix.keys
   end
 
+  def get_content(at_coordinate)
+    @matrix[at_coordinate]
+  end
+
+  def set_content(at_coordinate: :A1, content: nil)
+    @matrix[at_coordinate] = content
+  end
+
   private
 
   def matrix_builder(size)
