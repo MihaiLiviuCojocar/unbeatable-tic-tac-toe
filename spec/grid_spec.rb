@@ -31,4 +31,17 @@ describe Grid do
 
     grid.set_content_with(cell)
   end
+
+  it 'can place a marker at a coordinate' do
+    cell   = double :cell
+    grid   = Grid.new(size: 3)
+    marker = :zerro
+    coord  = :A1
+    grid.set_content(at_coordinate: coord, content: cell)
+
+    expect(cell).to receive(:content=).with(marker)
+
+    grid.place_marker(coord, marker)
+    puts grid.inspect
+  end
 end

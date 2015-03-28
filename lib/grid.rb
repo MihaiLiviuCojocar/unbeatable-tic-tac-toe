@@ -23,6 +23,10 @@ class Grid
     end
   end
 
+  def place_marker(at_coordinate, marker)
+    get_content(at_coordinate).content = marker
+  end
+
   private
 
   def matrix_builder(size)
