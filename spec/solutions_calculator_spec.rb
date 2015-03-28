@@ -14,4 +14,14 @@ describe SolutionsCalculator do
         [:A3, :B2, :C1]
       ])
   end
+
+  it 'needs a grid when initialized' do
+    solutions_calculator = SolutionsCalculator.new(grid: :grid)
+    expect(solutions_calculator.grid).to eq :grid
+  end
+
+  it 'needs a marker when initialized' do
+    solutions_calculator = SolutionsCalculator.new(grid: :grid, marker: :cross)
+    expect(solutions_calculator.marker).to eq :cross
+  end
 end

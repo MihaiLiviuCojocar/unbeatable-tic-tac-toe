@@ -8,5 +8,12 @@ class SolutionsCalculator
     [:C1, :C2, :C3],
     [:A1, :B2, :C3],
     [:A3, :B2, :C1]
-  ] 
+  ]
+
+  attr_reader :grid, :marker
+
+  def initialize(options = {})
+    @grid   = options[:grid]
+    @marker = options[:marker]
+  end
 end
