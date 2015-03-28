@@ -21,4 +21,14 @@ describe Grid do
     grid.set_content(at_coordinate: :B3, content: :cell)
     expect(grid.get_content(:B3)).to eq :cell
   end
+
+  it 'can set the content at all coordinates' do
+    size = 3
+    cell = double :cell
+    grid = Grid.new(size: size)
+
+    expect(cell).to receive(:new).exactly(size * size).times
+
+    grid.set_content_with(cell)
+  end
 end
