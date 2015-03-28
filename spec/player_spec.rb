@@ -30,4 +30,14 @@ describe Player do
 
     player.place_marker(coordinate)
   end
+
+  it 'knows where he placed his marker on the grid' do
+    coordinate    = :A1
+    player.marker = :zerro
+    allow(grid).to receive(:place_marker).with(at_coordinate: coordinate, marker: :zerro)
+
+    player.place_marker(coordinate)
+
+    expect(player.marked_coordinates).to eq [:A1]
+  end
 end

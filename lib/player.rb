@@ -12,5 +12,10 @@ class Player
 
   def place_marker(coordinate)
     grid.place_marker(at_coordinate: coordinate, marker: marker)
+    marked_coordinates << coordinate
+  end
+
+  def marked_coordinates
+    @marked_coordinates ||= []
   end
 end
