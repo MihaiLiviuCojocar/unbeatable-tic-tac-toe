@@ -12,7 +12,7 @@ class Grid
   private
 
   def matrix_builder(size)
-    [*'A'..equivalent_letter_for(size)].map{ |letter| [*1..size].map { |number| {"#{letter}#{number}".to_sym => nil } } }.flatten.reduce(:merge)
+    [*'A'..equivalent_letter_for(size)].map{ |letter| [*1..size].map { |number| {"#{letter}#{number}".to_sym => nil  } } }.flatten.reduce(:merge)
   end
 
   def equivalent_letter_for(number)
