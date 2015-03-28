@@ -3,12 +3,6 @@ require_relative 'exceptions'
 class Game
   WINNER = Proc.new{ |player| player.winner? }
 
-  attr_writer :grid
-
-  def has_grid?
-    !@grid.nil?
-  end
-
   def has_two_players?
     has_player_one? and has_player_two?
   end
@@ -27,7 +21,7 @@ class Game
   end
 
   def ready_to_start?
-    has_two_players? and has_grid?
+    has_two_players?
   end
 
   def current_player

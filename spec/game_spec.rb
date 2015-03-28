@@ -9,11 +9,6 @@ describe Game do
   before(:each) do
     game_ready.add_player(player_one)
     game_ready.add_player(player_two)
-    game_ready.grid = :grid
-  end
-
-  it 'has no grid when created' do
-    expect(game).not_to have_grid
   end
 
   it 'is not ready when created' do
@@ -22,12 +17,6 @@ describe Game do
 
   it 'is not over when created' do
     expect(game).not_to be_over
-  end
-
-  it 'can have a grid' do
-    game.grid = :grid
-
-    expect(game).to have_grid
   end
 
   it 'has no players when created' do
