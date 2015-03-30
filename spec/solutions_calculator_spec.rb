@@ -24,4 +24,27 @@ describe SolutionsCalculator do
     solutions_calculator = SolutionsCalculator.new(grid: :grid, marker: :cross)
     expect(solutions_calculator.marker).to eq :cross
   end
+
+  it 'knows all possible combinations' do
+    grid = double :grid
+    solutions_calaculator = SolutionsCalculator.new(grid: grid)
+    allow(grid).to receive(:matrix).and_return(
+    {
+      A1: 'X', B1: 'X', C1: 'O',
+      A2: '~', B2: '~', C2: 'X',
+      A3: 'O', B3: 'X', C3: '~'
+    })
+
+    expect(solutions_calaculator.possible_combinations).to eq(
+      [
+        ['X', 'X', 'O'],
+        ['~', '~', 'X'],
+        ['O', 'X', '~'],
+        ['X', '~', 'O'],
+        ['X', '~', 'X'],
+        ['O', 'X', '~'],
+        ['X', '~', '~'],
+        ['O', '~', 'O']
+      ])
+  end
 end

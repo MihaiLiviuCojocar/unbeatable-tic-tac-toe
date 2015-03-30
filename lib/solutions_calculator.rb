@@ -16,4 +16,12 @@ class SolutionsCalculator
     @grid   = options[:grid]
     @marker = options[:marker]
   end
+
+  def possible_combinations
+    WINNING_COMBINATIONS.map do |row|
+      row.map do |coordinate|
+        grid.matrix[coordinate]
+      end
+    end
+  end
 end
