@@ -1,5 +1,6 @@
 class SolutionsCalculator
-  WINNING_COMBINATIONS = [
+  EMPTY_CELL   = Proc.new { |cell| cell.content.nil? }
+  POSSIBLE_COMBINATIONS = [
     [:A1, :B1, :C1],
     [:A2, :B2, :C2],
     [:A3, :B3, :C3],
@@ -18,10 +19,18 @@ class SolutionsCalculator
   end
 
   def possible_combinations
-    WINNING_COMBINATIONS.map do |row|
+    POSSIBLE_COMBINATIONS.map do |row|
       row.map do |coordinate|
         grid.matrix[coordinate]
       end
     end
+  end
+
+  def any_available_cell_for_marking_in?(row)
+    row.any?(&EMPTY_CELL)
+  end
+
+  def winning_solutions
+    [:A2]
   end
 end

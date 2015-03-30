@@ -1,5 +1,5 @@
 class Cell
-  attr_writer :content
+  attr_accessor :content
 
   def has_content?
     !@content.nil?
