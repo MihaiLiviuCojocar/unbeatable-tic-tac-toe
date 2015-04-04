@@ -27,6 +27,10 @@ class Grid
     get_content(at_coordinate).content = marker
   end
 
+  def matrix
+    @matrix.dup
+  end
+
   private
 
   def matrix_builder(size)
