@@ -24,6 +24,6 @@ class SolutionsCalculator
   end
 
   def winning_solutions
-    possible_combinations.map { |row| row.winning_solution }.flatten.uniq
+    possible_combinations.map { |row| row.winning_solution }.flatten.uniq.sort
   end
 end
