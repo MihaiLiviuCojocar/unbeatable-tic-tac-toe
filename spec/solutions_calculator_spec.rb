@@ -2,7 +2,7 @@ require 'solutions_calculator'
 
 describe SolutionsCalculator do
   let(:grid)                 { double :grid                                       }
-  let(:row_class)            { double :row                                        }
+  let(:row_class)            { double :row_class                                  }
   let(:marker)               { :cross                                             }
   let(:solutions_calculator) { SolutionsCalculator.new grid: grid, marker: marker }
 
@@ -54,6 +54,13 @@ describe SolutionsCalculator do
   end
 
   it 'knows the winning solutions' do
+    row_one = double :row, winning_solution: [:A1]
+    row_two = double :row, winning_solution: [:B2]
+    allow(solutions_calculator).to receive(:possible_combinations).and_return([
+        row_one,
+        row_two
+      ])
 
+    expect(solutions_calculator.winning_solutions).to eq [:A1, :B2]
   end
 end

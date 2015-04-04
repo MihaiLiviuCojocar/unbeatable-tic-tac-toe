@@ -22,4 +22,8 @@ class SolutionsCalculator
       row_class.new(row.map { |coordinate| grid.matrix[coordinate] })
     end
   end
+
+  def winning_solutions
+    possible_combinations.map { |row| row.winning_solution }.flatten.uniq
+  end
 end
