@@ -1,7 +1,8 @@
 class Row
-  attr_reader :cells
+  attr_reader :cells, :marker
 
-  def initialize(cells: [])
-    @cells = cells
+  def initialize(opt = {})
+    @cells  = opt.fetch(:cells)
+    @marker = opt.fetch(:marker)
   end
 end
