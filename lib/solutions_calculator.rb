@@ -24,6 +24,14 @@ class SolutionsCalculator
   end
 
   def winning_solutions
-    possible_combinations.map { |row| row.winning_solution }.flatten.uniq.sort
+    possible_combinations.map do |row|
+      get_key_of(row.winning_cell)
+    end
+  end
+
+  private
+
+  def get_key_of(cell)
+    grid.matrix.key(cell)
   end
 end
