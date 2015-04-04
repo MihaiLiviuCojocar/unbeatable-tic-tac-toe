@@ -1,5 +1,5 @@
 class Row
-  EMPTY_CELLS          = Proc.new { |cell| cell.content.nil? }
+  EMPTY_CELLS = Proc.new { |cell| cell.content.nil? }
 
   attr_reader :cells, :marker
 
@@ -14,5 +14,9 @@ class Row
 
   def has_only_my_marker?
     cells.reject(&EMPTY_CELLS).all? { |cell| cell.content == marker }
+  end
+
+  def has_an_opportunity_to_win?
+    true
   end
 end

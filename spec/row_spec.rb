@@ -39,4 +39,9 @@ describe Row do
     row = Row.new(cells: another_row, marker: 'X')
     expect(row).not_to have_only_my_marker
   end
+
+  it 'knows if there is any opportunity to win' do
+    row = Row.new(cells: row_with_solution, marker: 'X')
+    expect(row).to have_an_opportunity_to_win
+  end
 end
