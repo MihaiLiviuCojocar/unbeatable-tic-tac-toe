@@ -55,4 +55,10 @@ describe Row do
 
     expect(row).not_to have_an_opportunity_to_win
   end
+
+  it 'knows the the winning cell' do
+    row = Row.new(cells: row_with_solution, marker: 'X')
+
+    expect(row.winning_cell).to eq empty_cell
+  end
 end
