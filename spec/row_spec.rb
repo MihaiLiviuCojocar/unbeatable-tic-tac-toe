@@ -44,4 +44,9 @@ describe Row do
     row = Row.new(cells: row_with_solution, marker: 'X')
     expect(row).to have_an_opportunity_to_win
   end
+
+  it 'knows if there is no opportunity to win' do
+    row = Row.new(cells: another_row, marker: 'X')
+    expect(row).not_to have_an_opportunity_to_win
+  end
 end
