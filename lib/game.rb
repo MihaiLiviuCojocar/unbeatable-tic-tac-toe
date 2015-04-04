@@ -50,6 +50,10 @@ class Game
     switch_turns
   end
 
+  def moves
+    @moves ||= 0
+  end
+
   private
 
   def add_player_one(player)

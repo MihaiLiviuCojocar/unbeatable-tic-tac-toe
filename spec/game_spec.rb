@@ -97,4 +97,8 @@ describe Game do
 
     expect(game_ready.current_player).to eq(player_two)
   end
+
+  it 'knows that has zerro moves when initialized' do
+    expect(game_ready.moves).to eq(0)
+  end
 end
