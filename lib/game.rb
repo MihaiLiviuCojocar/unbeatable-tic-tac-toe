@@ -41,6 +41,10 @@ class Game
     players.select(&WINNER).first
   end
 
+  def find_player_by_name(name)
+    players.select { |player| player.name == name }.first
+  end
+
   private
 
   def add_player_one(player)
