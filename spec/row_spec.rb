@@ -1,5 +1,3 @@
-require 'row'
-
 describe Row do
   let(:cell_with_cross)      { double :cell, content: 'X', has_content?: true      }
   let(:cell_with_zerro)      { double :cell, content: 'O', has_content?: true      }

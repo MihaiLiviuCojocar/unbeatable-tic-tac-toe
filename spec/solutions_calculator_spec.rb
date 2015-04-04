@@ -1,5 +1,3 @@
-require 'solutions_calculator'
-
 describe SolutionsCalculator do
   let(:grid)                 { double :grid                                       }
   let(:row_class)            { double :row_class                                  }
