@@ -83,4 +83,18 @@ describe Game do
   it 'can find a player by name' do
     expect(game_ready.find_player_by_name('Mihai')).to eq(player_one)
   end
+
+  it 'makes a move for the current player' do
+    expect(player_one).to receive(:place_marker).with(:A1)
+
+    game_ready.make_move(:A1)
+  end
+
+  it 'switches the turnes after making a move' do
+    allow(player_one).to receive(:place_marker).with(:A1)
+
+    game_ready.make_move(:A1)
+
+    expect(game_ready.current_player).to eq(player_two)
+  end
 end

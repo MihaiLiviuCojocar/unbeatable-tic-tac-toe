@@ -45,6 +45,11 @@ class Game
     players.select { |player| player.name == name }.first
   end
 
+  def make_move(at_coordinate)
+    current_player.place_marker(at_coordinate)
+    switch_turns
+  end
+
   private
 
   def add_player_one(player)

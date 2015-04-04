@@ -33,5 +33,5 @@ When(/^"([^"]*)" places his marker at "([^"]*)"$/) do |name, coordinate|
 end
 
 Then(/^the game should say "([^"]*)"$/) do |message|
-  expect{ @game.switch_turns }.to raise_error(GameOverError, message)
+  expect{ @game.switch_turns }.to raise_error(message)
 end
