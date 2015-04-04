@@ -1,5 +1,6 @@
 class SolutionsCalculator
-  EMPTY_CELL   = Proc.new { |cell| cell.content.nil? }
+  attr_reader :grid, :marker
+
   POSSIBLE_COMBINATIONS = [
     [:A1, :B1, :C1],
     [:A2, :B2, :C2],
@@ -11,26 +12,14 @@ class SolutionsCalculator
     [:A3, :B2, :C1]
   ]
 
-  attr_reader :grid, :marker
-
   def initialize(options = {})
     @grid   = options[:grid]
     @marker = options[:marker]
   end
 
-  def possible_combinations
+  def possible_combinations(row_class)
     POSSIBLE_COMBINATIONS.map do |row|
-      row.map do |coordinate|
-        grid.matrix[coordinate]
-      end
+      row_class.new(row.map { |coordinate| grid.matrix[coordinate] })
     end
-  end
-
-  def any_available_cell_for_marking_in?(row)
-    row.any?(&EMPTY_CELL)
-  end
-
-  def winning_solutions
-    [:A2]
   end
 end
