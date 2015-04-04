@@ -47,10 +47,10 @@ describe SolutionsCalculator do
       ]
 
     rows.each do |row|
-      expect(row_class).to receive(:new).with(row).ordered
+      expect(Row).to receive(:new).with(cells: row, marker: marker).ordered
     end
 
-    solutions_calculator.possible_combinations(row_class)
+    solutions_calculator.possible_combinations
   end
 
   it 'knows the winning solutions' do

@@ -17,9 +17,9 @@ class SolutionsCalculator
     @marker = options[:marker]
   end
 
-  def possible_combinations(row_class)
+  def possible_combinations
     POSSIBLE_COMBINATIONS.map do |row|
-      row_class.new(row.map { |coordinate| grid.matrix[coordinate] })
+      Row.new(cells: row.map { |coordinate| grid.matrix[coordinate] }, marker: marker)
     end
   end
 

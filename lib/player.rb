@@ -13,8 +13,8 @@ class Player
   end
 
   def place_marker(at_coordinate)
-    grid.place_marker(at_coordinate, marker)
     become_winner if winning_solutions.include?(at_coordinate)
+    grid.place_marker(at_coordinate, marker)
   end
 
   def winning_solutions
