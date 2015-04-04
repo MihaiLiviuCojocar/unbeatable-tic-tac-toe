@@ -6,6 +6,7 @@ describe Row do
   let(:empty_cell)           { double :cell, content: nil, has_content?: false     }
   let(:row_without_solution) { [cell_with_cross, cell_with_zerro, cell_with_cross] }
   let(:row_with_solution)    { [cell_with_cross, cell_with_cross, empty_cell]      }
+  let(:another_row)          { [cell_with_cross, cell_with_zerro, empty_cell]      }
 
   it 'is initialized with a list of cells' do
     row = Row.new(cells: [:cell1, :cell2, :cell3], marker: 'X')
@@ -27,5 +28,15 @@ describe Row do
     row = Row.new(cells: row_with_solution, marker: 'X')
 
     expect(row).to have_available_cell_for_marking
+  end
+
+  it 'knows if it has only my marker' do
+    row = Row.new(cells: row_with_solution, marker: 'X')
+    expect(row).to have_only_my_marker
+  end
+
+  it 'knows if it has not only my marker' do
+    row = Row.new(cells: another_row, marker: 'X')
+    expect(row).not_to have_only_my_marker
   end
 end
