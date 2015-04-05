@@ -9,6 +9,11 @@ class Ai < Player
     mark_middle if is_middle_free? or mark_a_corner
   end
 
+  def make_second_move
+    coordinate = solutions_calculator.defending_solutions.first
+    grid.place_marker(coordinate, marker)
+  end
+
   private
 
   def mark_middle
