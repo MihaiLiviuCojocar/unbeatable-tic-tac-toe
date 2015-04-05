@@ -19,3 +19,9 @@ class DrawGameError < Exception
     'Draw! Nobody wins! :)'
   end
 end
+
+class CellAlreadyMarkedError < Exception
+  def to_s
+    'This cell has already been marked!'
+  end
+end
