@@ -35,9 +35,21 @@ class SolutionsCalculator
     end
   end
 
+  def first_move_recomandation
+    recommend_middle or recommend_a_corner
+  end
+
   private
 
   def get_key_of(cell)
     grid.matrix.key(cell)
+  end
+
+  def recommend_a_corner
+    grid.corner_coordinates.sample
+  end
+
+  def recommend_middle
+    grid.middle_coordinate if grid.has_middle_free?
   end
 end
