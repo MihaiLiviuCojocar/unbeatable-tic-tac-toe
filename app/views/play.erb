@@ -1,0 +1,47 @@
+<h4><%= @game.player_one.name %>'s marker is <%= @game.player_one.marker %></h4>
+<h4><%= @game.player_two.name %>'s marker is <%= @game.player_two.marker %></h4>
+
+<h5>This is the grid</h5>
+
+<table width="400" cellpadding="10" cellspacing="5" border="1" bgcolor="grey">
+  <th></th>
+  <% (1..@game.player_one.grid.size).each do |header| %>
+    <th><%= header %></th>
+  <% end %>
+  <% @game.player_one.grid.rows.each.with_index(1) do |row, index| %>
+    <tr>
+      <th><%=(index + 64).chr %></th>
+      <% row.each do |col| %>
+        <td><%= col %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
+<h3>It is <%= @game.current_player.name %>'s turn to move</h3>
+
+<form action="/play" method="post">
+  <select name="letter">
+    <option value="A">A</option>
+    <option value="B">B</option>
+    <option value="C">C</option>
+  </select>
+
+  <select name="number">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+  </select>
+
+  <input type="submit" value="Move">
+</form>
+
+<% if flash[:notice] %>
+  <h3><%= flash[:notice] %></h3>
+
+  <a href="/reset" name="reset">Reset</a>
+<% end %>
+
+<% if flash[:cell_error] %>
+  <h3><%= flash[:cell_error] %></h3>
+<% end %>
