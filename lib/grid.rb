@@ -50,7 +50,7 @@ class Grid
     :B2
   end
 
-  def middle_coordinates
+  def middle_line_coordinates
     [:A2, :B1, :B3, :C2]
   end
 

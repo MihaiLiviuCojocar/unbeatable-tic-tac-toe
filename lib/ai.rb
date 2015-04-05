@@ -10,8 +10,7 @@ class Ai < Player
   end
 
   def make_second_move
-    coordinate = solutions_calculator.defending_solutions.first
-    grid.place_marker(coordinate, marker)
+    defend if need_to_defend? or mark_the_middle_of_a_line
   end
 
   def need_to_defend?
@@ -21,7 +20,17 @@ class Ai < Player
   private
 
   def mark_middle
-    grid.place_marker(grid.middle_coordinate, marker)
+    place_marker(grid.middle_coordinate)
+  end
+
+  def mark_the_middle_of_a_line
+    coordinate = grid.middle_line_coordinates.sample
+    place_marker(coordinate)
+  end
+
+  def defend
+    coordinate = solutions_calculator.defending_solutions.first
+    place_marker(coordinate)
   end
 
   def is_middle_free?
@@ -30,6 +39,6 @@ class Ai < Player
 
   def mark_a_corner
     coordinate = grid.corner_coordinates.sample
-    grid.place_marker(coordinate, marker)
+    place_marker(coordinate)
   end
 end

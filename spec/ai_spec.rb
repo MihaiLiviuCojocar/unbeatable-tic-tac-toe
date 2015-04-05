@@ -18,6 +18,10 @@ describe Ai do
     end
 
     context 'making the first move' do
+      before do
+        allow(solutions_calculator).to receive(:winning_solutions).and_return([])
+      end
+      
       context 'when the middle is free' do
         it 'takes it' do
           allow(grid).to receive(:has_middle_free?).and_return(true)
@@ -42,6 +46,10 @@ describe Ai do
     end
 
     context 'making the second move' do
+      before do
+        allow(solutions_calculator).to receive(:winning_solutions).and_return([])
+      end
+
       it 'knows if he needs to defend' do
         allow(solutions_calculator).to receive(:defending_solutions).and_return([:A1])
 
@@ -66,6 +74,16 @@ describe Ai do
         allow(solutions_calculator).to receive(:defending_solutions).and_return([:C1])
 
         expect(grid).to receive(:place_marker).with(:C1, marker)
+
+        ai.make_second_move
+      end
+
+      it 'marks a middle if he doesnt need to defend' do
+        allow(ai).to receive(:need_to_defend?).and_return(false)
+        # allow(solutions_calculator).to receive(:defending_solutions).and_return([])
+        allow(grid).to receive(:middle_line_coordinates).and_return([:A2])
+
+        expect(grid).to receive(:place_marker).with(:A2, marker)
 
         ai.make_second_move
       end
