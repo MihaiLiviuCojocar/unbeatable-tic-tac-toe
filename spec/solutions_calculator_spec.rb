@@ -98,7 +98,7 @@ describe SolutionsCalculator do
           allow(grid).to receive(:has_middle_free?).and_return(true)
           allow(grid).to receive(:middle_coordinate).and_return(:B2)
 
-          expect(solutions_calculator.first_move_recomandation).to eq(:B2)
+          expect(solutions_calculator.first_move_recommendation).to eq(:B2)
         end
       end
 
@@ -107,7 +107,7 @@ describe SolutionsCalculator do
           allow(grid).to receive(:has_middle_free?).and_return(false)
           allow(grid).to receive(:corner_coordinates).and_return([:A1])
 
-          expect(solutions_calculator.first_move_recomandation).to eq(:A1)
+          expect(solutions_calculator.first_move_recommendation).to eq(:A1)
         end
       end
     end
@@ -128,20 +128,20 @@ describe SolutionsCalculator do
       it 'makes a recommandation to defend' do
         allow(solutions_calculator).to receive(:defending_solutions).and_return([:A1])
 
-        expect(solutions_calculator.second_move_recommandation).to eq(:A1)
+        expect(solutions_calculator.second_move_recommendation).to eq(:A1)
       end
 
       it 'makes a recommandation to defend' do
         allow(solutions_calculator).to receive(:defending_solutions).and_return([:C1])
 
-        expect(solutions_calculator.second_move_recommandation).to eq(:C1)
+        expect(solutions_calculator.second_move_recommendation).to eq(:C1)
       end
 
       it 'recommends the middle of a line if doesnt need defending' do
         allow(solutions_calculator).to receive(:need_to_defend?).and_return(false)
         allow(grid).to receive(:middle_line_coordinates).and_return([:A2])
 
-        expect(solutions_calculator.second_move_recommandation).to eq(:A2)
+        expect(solutions_calculator.second_move_recommendation).to eq(:A2)
       end
     end
 
@@ -167,14 +167,14 @@ describe SolutionsCalculator do
       it 'will recommend to win first if possible' do
         allow(solutions_calculator).to receive(:winning_solutions).and_return([:A1])
 
-        expect(solutions_calculator.recommandation).to eq(:A1)
+        expect(solutions_calculator.recommendation).to eq(:A1)
       end
 
       it 'recommned to defend if cant win and has to defend' do
         allow(solutions_calculator).to receive(:winning_solutions).and_return([])
         allow(solutions_calculator).to receive(:defending_solutions).and_return([:A1])
 
-        expect(solutions_calculator.recommandation).to eq(:A1)
+        expect(solutions_calculator.recommendation).to eq(:A1)
       end
 
       it 'recommends a random coordinate otherwise' do
@@ -182,7 +182,7 @@ describe SolutionsCalculator do
         allow(solutions_calculator).to receive(:defending_solutions).and_return([])
         allow(grid).to receive(:available_cells_coordinates).and_return([:A1])
 
-        expect(solutions_calculator.recommandation).to eq(:A1)
+        expect(solutions_calculator.recommendation).to eq(:A1)
       end
     end
   end

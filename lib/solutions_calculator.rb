@@ -35,7 +35,7 @@ class SolutionsCalculator
     end.compact
   end
 
-  def first_move_recomandation
+  def first_move_recommendation
     recommend_middle or recommend_a_corner
   end
 
@@ -43,7 +43,7 @@ class SolutionsCalculator
     defending_solutions.any?
   end
 
-  def second_move_recommandation
+  def second_move_recommendation
     recommend_a_defending_solution or recommend_the_middle_of_a_line
   end
 
@@ -55,7 +55,11 @@ class SolutionsCalculator
     winning_solutions.sample if any_opportunity_to_win?
   end
 
-  def recommandation
+  def third_move_recommendation
+    recommend_winning_solution or recommend_a_defending_solution or recommend_the_middle_of_a_line
+  end
+
+  def recommendation
     recommend_winning_solution or recommend_a_defending_solution or recommend_an_empty_cell
   end
 
@@ -74,7 +78,11 @@ class SolutionsCalculator
   end
 
   def recommend_the_middle_of_a_line
-    grid.middle_line_coordinates.sample
+    coord = grid.middle_line_coordinates.sample
+    until grid.available_cells_coordinates.include?(coord) do
+      coord = grid.middle_line_coordinates.sample
+    end
+    coord
   end
 
   def recommend_a_defending_solution
