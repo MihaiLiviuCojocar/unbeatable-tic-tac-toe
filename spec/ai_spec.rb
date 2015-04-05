@@ -13,15 +13,14 @@ describe Ai do
 
   context 'moving' do
     before do
-      ai.marker               = :cross
-      ai.solutions_calculator = solutions_calculator
+      ai.marker = :cross
     end
 
     context 'making the first move' do
       context 'when the middle is free' do
         it 'takes it' do
-          allow(grid).to receive(:is_middle_free?).and_return(true)
-          allow(grid).to receive(:corner_coordinates).and_return([:A1])
+          allow(grid).to receive(:has_middle_free?).and_return(true)
+          # allow(grid).to receive(:corner_coordinates).and_return([:A1])
           allow(grid).to receive(:middle_coordinate).and_return(:B2)
 
           expect(grid).to receive(:place_marker).with(middle_coordinate, marker)
@@ -32,9 +31,9 @@ describe Ai do
 
       context 'when the middle is not free' do
         it 'takes a corner' do
-          allow(grid).to receive(:is_middle_free?).and_return(false)
+          allow(grid).to receive(:has_middle_free?).and_return(false)
           allow(grid).to receive(:corner_coordinates).and_return([:A1])
-          
+
           expect(grid).to receive(:place_marker).with(:A1, marker)
 
           ai.make_first_move

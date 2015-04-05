@@ -6,17 +6,17 @@ class Ai < Player
   end
 
   def make_first_move
-    mark_middle or mark_a_corner
+    mark_middle if is_middle_free? or mark_a_corner
   end
 
   private
 
   def mark_middle
-    grid.place_marker(grid.middle_coordinate, marker) if is_middle_free?
+    grid.place_marker(grid.middle_coordinate, marker)
   end
 
   def is_middle_free?
-    grid.is_middle_free?
+    grid.has_middle_free?
   end
 
   def mark_a_corner
