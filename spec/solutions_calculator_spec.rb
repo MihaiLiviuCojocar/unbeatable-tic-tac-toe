@@ -140,6 +140,7 @@ describe SolutionsCalculator do
       it 'recommends the middle of a line if doesnt need defending' do
         allow(solutions_calculator).to receive(:need_to_defend?).and_return(false)
         allow(grid).to receive(:middle_line_coordinates).and_return([:A2])
+        allow(grid).to receive(:available_cells_coordinates).and_return([:A2])
 
         expect(solutions_calculator.second_move_recommendation).to eq(:A2)
       end
