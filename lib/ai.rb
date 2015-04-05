@@ -18,7 +18,7 @@ class Ai < Player
   end
 
   def make_move
-    attack if can_win? or defend
+    attack if can_win? or defend if need_to_defend? or mark_an_available_cell
   end
 
   def can_win?
@@ -31,6 +31,11 @@ class Ai < Player
   end
 
   private
+
+  def mark_an_available_cell
+    coordinate = solutions_calculator.available_cell_coordinates.sample
+    place_marker(coordinate)
+  end
 
   def mark_middle
     place_marker(grid.middle_coordinate)

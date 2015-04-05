@@ -1,5 +1,5 @@
 class Grid
-  DEFAULT_SIZE       = 1
+  DEFAULT_SIZE = 1
 
   attr_reader :size
 

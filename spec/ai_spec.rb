@@ -105,6 +105,8 @@ describe Ai do
 
       it 'will win if has the opprortunity' do
         allow(solutions_calculator).to receive(:winning_solutions).and_return([:A1])
+        allow(solutions_calculator).to receive(:defending_solutions).and_return([])
+        allow(solutions_calculator).to receive(:available_cell_coordinates).and_return([:A1])
 
         expect(grid).to receive(:place_marker).with(:A1, marker)
 
@@ -114,6 +116,16 @@ describe Ai do
       it 'will defend if he has to' do
         allow(solutions_calculator).to receive(:winning_solutions).and_return([])
         allow(solutions_calculator).to receive(:defending_solutions).and_return([:A1])
+
+        expect(grid).to receive(:place_marker).with(:A1, marker)
+
+        ai.make_move
+      end
+
+      it 'makes a random move otherwise' do
+        allow(solutions_calculator).to receive(:winning_solutions).and_return([])
+        allow(solutions_calculator).to receive(:defending_solutions).and_return([])
+        allow(solutions_calculator).to receive(:available_cell_coordinates).and_return([:A1])
 
         expect(grid).to receive(:place_marker).with(:A1, marker)
 

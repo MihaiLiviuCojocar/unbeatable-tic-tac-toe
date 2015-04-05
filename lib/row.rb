@@ -38,11 +38,11 @@ class Row
     empty_cell if has_to_defend?
   end
 
-  private
-
   def empty_cell
     cells.select(&EMPTY_CELLS).first
   end
+  
+  private
 
   def has_only_enemy_marker?
     cells.map(&CELL_CONTENT).compact.uniq.first != marker
