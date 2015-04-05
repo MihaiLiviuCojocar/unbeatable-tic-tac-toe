@@ -20,3 +20,18 @@ Then(/^I should be asked what kind of a game I want to play$/) do
   expect(page).to have_link 'Human'
   expect(page).to have_link 'Computer'
 end
+
+Given(/^I am alredy registered$/) do
+  steps %{
+    Given I am on the homepage
+    And I register
+  }
+end
+
+Given(/^I want to play against another human$/) do
+  click_link 'Human'
+end
+
+Then(/^the second player should be asked to register$/) do
+  expect(page).to have_content 'What is the name of the second player?'
+end
