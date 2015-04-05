@@ -47,6 +47,18 @@ class SolutionsCalculator
     recommend_a_defending_solution or recommend_the_middle_of_a_line
   end
 
+  def any_opportunity_to_win?
+    winning_solutions.any?
+  end
+
+  def recommend_winning_solution
+    winning_solutions.sample if any_opportunity_to_win?
+  end
+
+  def recommandation
+    recommend_winning_solution or recommend_a_defending_solution or recommend_an_empty_cell
+  end
+
   private
 
   def get_key_of(cell)
@@ -67,5 +79,9 @@ class SolutionsCalculator
 
   def recommend_a_defending_solution
     defending_solutions.first if need_to_defend?
+  end
+
+  def recommend_an_empty_cell
+    grid.available_cells_coordinates.sample
   end
 end

@@ -51,4 +51,11 @@ describe Grid do
 
     expect(grid).not_to have_middle_free
   end
+
+  it 'has a list of all available cells' do
+    grid = Grid.new(size: 1)
+    grid.set_content(content: empty_cell)
+
+    expect(grid.available_cells_coordinates).to eq([:A1])
+  end
 end

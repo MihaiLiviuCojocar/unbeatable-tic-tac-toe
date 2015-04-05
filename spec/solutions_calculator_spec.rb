@@ -4,7 +4,7 @@ describe SolutionsCalculator do
   let(:marker)               { :cross                                             }
   let(:solutions_calculator) { SolutionsCalculator.new grid: grid, marker: marker }
 
-    context 'providing solutions' do
+  context 'providing solutions' do
     it 'has a list of coordinates of all possible winning combinations' do
       expect(SolutionsCalculator::POSSIBLE_COMBINATIONS).to eq (
         [
@@ -113,10 +113,6 @@ describe SolutionsCalculator do
     end
 
     context 'second move' do
-      # before do
-      #   allow(solutions_calculator).to receive(:winning_solutions).and_return([])
-      # end
-
       it 'knows if it needs to defend' do
         allow(solutions_calculator).to receive(:defending_solutions).and_return([:A1])
 
@@ -146,6 +142,47 @@ describe SolutionsCalculator do
         allow(grid).to receive(:middle_line_coordinates).and_return([:A2])
 
         expect(solutions_calculator.second_move_recommandation).to eq(:A2)
+      end
+    end
+
+    context 'after the second move' do
+      it 'knows if it can win' do
+        allow(solutions_calculator).to receive(:winning_solutions).and_return([:A1])
+
+        expect(solutions_calculator.any_opportunity_to_win?).to be true
+      end
+
+      it 'knows if it cannot win' do
+        allow(solutions_calculator).to receive(:winning_solutions).and_return([])
+
+        expect(solutions_calculator.any_opportunity_to_win?).to be false
+      end
+
+      it 'can make a recomandation to win' do
+        allow(solutions_calculator).to receive(:winning_solutions).and_return([:A1])
+
+        expect(solutions_calculator.recommend_winning_solution).to eq(:A1)
+      end
+
+      it 'will recommend to win first if possible' do
+        allow(solutions_calculator).to receive(:winning_solutions).and_return([:A1])
+
+        expect(solutions_calculator.recommandation).to eq(:A1)
+      end
+
+      it 'recommned to defend if cant win and has to defend' do
+        allow(solutions_calculator).to receive(:winning_solutions).and_return([])
+        allow(solutions_calculator).to receive(:defending_solutions).and_return([:A1])
+
+        expect(solutions_calculator.recommandation).to eq(:A1)
+      end
+
+      it 'recommends a random coordinate otherwise' do
+        allow(solutions_calculator).to receive(:winning_solutions).and_return([])
+        allow(solutions_calculator).to receive(:defending_solutions).and_return([])
+        allow(grid).to receive(:available_cells_coordinates).and_return([:A1])
+
+        expect(solutions_calculator.recommandation).to eq(:A1)
       end
     end
   end

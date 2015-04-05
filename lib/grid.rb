@@ -58,6 +58,12 @@ class Grid
     [:A1, :A3, :C1, :C3]
   end
 
+  def available_cells_coordinates
+    available_cells.map do |cell|
+      get_key_of(cell)
+    end
+  end
+
   private
 
   def matrix_builder(size)
@@ -70,5 +76,13 @@ class Grid
 
   def equivalent_letter_for(number)
     (number + 64).chr
+  end
+
+  def available_cells
+    matrix.values.reject { |cell| cell.has_content? }
+  end
+
+  def get_key_of(cell)
+    matrix.key(cell)
   end
 end
