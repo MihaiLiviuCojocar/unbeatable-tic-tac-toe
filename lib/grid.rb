@@ -42,6 +42,28 @@ class Grid
     @matrix = matrix_builder(size)
   end
 
+  def has_middle_free?
+    !get_content(middle_coordinate).has_content?
+  end
+
+  def middle_coordinate
+    :B2
+  end
+
+  def middle_line_coordinates
+    [:A2, :B1, :B3, :C2]
+  end
+
+  def corner_coordinates
+    [:A1, :A3, :C1, :C3]
+  end
+
+  def available_cells_coordinates
+    available_cells.map do |cell|
+      get_key_of(cell)
+    end
+  end
+
   private
 
   def matrix_builder(size)
@@ -54,5 +76,13 @@ class Grid
 
   def equivalent_letter_for(number)
     (number + 64).chr
+  end
+
+  def available_cells
+    matrix.values.reject { |cell| cell.has_content? }
+  end
+
+  def get_key_of(cell)
+    matrix.key(cell)
   end
 end
