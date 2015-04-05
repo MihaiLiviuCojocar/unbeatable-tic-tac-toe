@@ -17,6 +17,19 @@ class Ai < Player
     solutions_calculator.defending_solutions.any?
   end
 
+  def make_move
+    attack if can_win? or defend
+  end
+
+  def can_win?
+    solutions_calculator.winning_solutions.any?
+  end
+
+  def attack
+    coordinate = solutions_calculator.winning_solutions.first
+    place_marker(coordinate)
+  end
+
   private
 
   def mark_middle

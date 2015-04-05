@@ -21,7 +21,7 @@ describe Ai do
       before do
         allow(solutions_calculator).to receive(:winning_solutions).and_return([])
       end
-      
+
       context 'when the middle is free' do
         it 'takes it' do
           allow(grid).to receive(:has_middle_free?).and_return(true)
@@ -80,12 +80,44 @@ describe Ai do
 
       it 'marks a middle if he doesnt need to defend' do
         allow(ai).to receive(:need_to_defend?).and_return(false)
-        # allow(solutions_calculator).to receive(:defending_solutions).and_return([])
         allow(grid).to receive(:middle_line_coordinates).and_return([:A2])
 
         expect(grid).to receive(:place_marker).with(:A2, marker)
 
         ai.make_second_move
+      end
+    end
+
+    context 'continue playing' do
+      it 'knows if he can win' do
+        allow(solutions_calculator).to receive(:winning_solutions).and_return([:A1])
+
+        expect(ai.can_win?).to be true
+      end
+
+      it 'can win' do
+        allow(solutions_calculator).to receive(:winning_solutions).and_return([:A1])
+
+        expect(grid).to receive(:place_marker).with(:A1, marker)
+
+        ai.attack
+      end
+
+      it 'will win if has the opprortunity' do
+        allow(solutions_calculator).to receive(:winning_solutions).and_return([:A1])
+
+        expect(grid).to receive(:place_marker).with(:A1, marker)
+
+        ai.make_move
+      end
+
+      it 'will defend if he has to' do
+        allow(solutions_calculator).to receive(:winning_solutions).and_return([])
+        allow(solutions_calculator).to receive(:defending_solutions).and_return([:A1])
+
+        expect(grid).to receive(:place_marker).with(:A1, marker)
+
+        ai.make_move
       end
     end
   end
