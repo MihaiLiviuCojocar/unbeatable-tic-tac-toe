@@ -42,6 +42,18 @@ describe Ai do
     end
 
     context 'making the second move' do
+      it 'knows if he needs to defend' do
+        allow(solutions_calculator).to receive(:defending_solutions).and_return([:A1])
+
+        expect(ai.need_to_defend?).to be true
+      end
+
+      it 'knows if he doesnt need to defend' do
+        allow(solutions_calculator).to receive(:defending_solutions).and_return([])
+
+        expect(ai.need_to_defend?).to be false
+      end
+
       it 'defends if needed' do
         allow(solutions_calculator).to receive(:defending_solutions).and_return([:A1])
 

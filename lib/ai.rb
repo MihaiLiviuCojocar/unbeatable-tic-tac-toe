@@ -14,6 +14,10 @@ class Ai < Player
     grid.place_marker(coordinate, marker)
   end
 
+  def need_to_defend?
+    solutions_calculator.defending_solutions.any?
+  end
+
   private
 
   def mark_middle
