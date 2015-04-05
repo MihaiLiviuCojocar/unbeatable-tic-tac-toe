@@ -1,7 +1,7 @@
 describe Row do
-  let(:cell_with_cross)      { double :cell, content: 'X', has_content?: true      }
-  let(:cell_with_zerro)      { double :cell, content: 'O', has_content?: true      }
-  let(:empty_cell)           { double :cell, content: nil, has_content?: false     }
+  let(:cell_with_cross)      { double :cell_with_cross, content: 'X', has_content?: true      }
+  let(:cell_with_zerro)      { double :cell_with_zerro, content: 'O', has_content?: true      }
+  let(:empty_cell)           { double :empty_cell, content: nil, has_content?: false     }
   let(:row_without_solution) { [cell_with_cross, cell_with_zerro, cell_with_cross] }
   let(:row_with_solution)    { [cell_with_cross, cell_with_cross, empty_cell]      }
   let(:another_row)          { [cell_with_cross, cell_with_zerro, empty_cell]      }
@@ -58,5 +58,29 @@ describe Row do
     row = Row.new(cells: row_with_solution, marker: 'X')
 
     expect(row.winning_cell).to eq empty_cell
+  end
+
+  it 'knows if there is a need to defend' do
+    row = Row.new(cells: row_with_solution, marker: 'O')
+
+    expect(row).to have_to_defend
+  end
+
+  it "knows if there are two cells marked with the enemy's marker" do
+    row = Row.new(cells: row_with_solution, marker: 'O')
+
+    expect(row).to have_only_two_enemy_markers
+  end
+
+  it "knows if there are two cells marked with the enemy's marker" do
+    row = Row.new(cells: another_row, marker: 'O')
+
+    expect(row).not_to have_only_two_enemy_markers
+  end
+
+  it 'knows if there is no need to defend' do
+    row = Row.new(cells: another_row, marker: 'O')
+
+    expect(row).not_to have_to_defend
   end
 end
