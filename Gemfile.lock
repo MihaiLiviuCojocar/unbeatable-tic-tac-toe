@@ -29,6 +29,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.2.0)
     rspec-support (3.2.2)
+    terminal-table (1.4.5)
 
 PLATFORMS
   ruby
@@ -36,3 +37,4 @@ PLATFORMS
 DEPENDENCIES
   cucumber
   rspec
+  terminal-table
