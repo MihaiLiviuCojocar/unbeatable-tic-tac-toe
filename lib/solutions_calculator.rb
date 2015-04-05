@@ -39,6 +39,14 @@ class SolutionsCalculator
     recommend_middle or recommend_a_corner
   end
 
+  def need_to_defend?
+    defending_solutions.any?
+  end
+
+  def second_move_recommandation
+    recommend_a_defending_solution or recommend_the_middle_of_a_line
+  end
+
   private
 
   def get_key_of(cell)
@@ -51,5 +59,13 @@ class SolutionsCalculator
 
   def recommend_middle
     grid.middle_coordinate if grid.has_middle_free?
+  end
+
+  def recommend_the_middle_of_a_line
+    grid.middle_line_coordinates.sample
+  end
+
+  def recommend_a_defending_solution
+    defending_solutions.first if need_to_defend?
   end
 end

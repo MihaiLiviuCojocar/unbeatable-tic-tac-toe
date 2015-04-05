@@ -111,5 +111,42 @@ describe SolutionsCalculator do
         end
       end
     end
+
+    context 'second move' do
+      # before do
+      #   allow(solutions_calculator).to receive(:winning_solutions).and_return([])
+      # end
+
+      it 'knows if it needs to defend' do
+        allow(solutions_calculator).to receive(:defending_solutions).and_return([:A1])
+
+        expect(solutions_calculator.need_to_defend?).to be true
+      end
+
+      it 'knows if it doesnt need to defend' do
+        allow(solutions_calculator).to receive(:defending_solutions).and_return([])
+
+        expect(solutions_calculator.need_to_defend?).to be false
+      end
+
+      it 'makes a recommandation to defend' do
+        allow(solutions_calculator).to receive(:defending_solutions).and_return([:A1])
+
+        expect(solutions_calculator.second_move_recommandation).to eq(:A1)
+      end
+
+      it 'makes a recommandation to defend' do
+        allow(solutions_calculator).to receive(:defending_solutions).and_return([:C1])
+
+        expect(solutions_calculator.second_move_recommandation).to eq(:C1)
+      end
+
+      it 'recommends the middle of a line if doesnt need defending' do
+        allow(solutions_calculator).to receive(:need_to_defend?).and_return(false)
+        allow(grid).to receive(:middle_line_coordinates).and_return([:A2])
+
+        expect(solutions_calculator.second_move_recommandation).to eq(:A2)
+      end
+    end
   end
 end
