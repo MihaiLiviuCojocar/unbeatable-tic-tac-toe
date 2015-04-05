@@ -26,13 +26,13 @@ class SolutionsCalculator
   def winning_solutions
     possible_combinations.map do |row|
       get_key_of(row.winning_cell)
-    end
+    end.compact
   end
 
   def defending_solutions
     possible_combinations.map do |row|
       get_key_of(row.defending_cell)
-    end
+    end.compact
   end
 
   def first_move_recomandation
