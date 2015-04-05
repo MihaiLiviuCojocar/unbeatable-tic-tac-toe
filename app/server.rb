@@ -46,7 +46,7 @@ class TicTacToe < Sinatra::Base
     begin
       game.make_move(coordinate)
     rescue GameOverError => e
-      flash[:message] = e.message
+      flash[:notice] = e.message
     end
     redirect '/play'
   end

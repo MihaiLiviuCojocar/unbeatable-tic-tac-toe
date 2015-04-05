@@ -1,4 +1,4 @@
-require 'exceptions'
+require_relative 'exceptions'
 
 class Cell
   attr_reader :content
