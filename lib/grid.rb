@@ -1,8 +1,11 @@
 class Grid
   DEFAULT_SIZE = 1
 
+  attr_reader :size
+
   def initialize(size: DEFAULT_SIZE)
-    @matrix = matrix_builder(size)
+    @size   = size
+    @matrix = matrix_builder(@size)
   end
 
   def coordinates
@@ -29,6 +32,10 @@ class Grid
 
   def matrix
     @matrix.dup
+  end
+
+  def rows
+    matrix.values.map { |cell| cell.content }.each_slice(size).to_a
   end
 
   private
