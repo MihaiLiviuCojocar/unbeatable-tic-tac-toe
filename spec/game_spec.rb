@@ -109,4 +109,11 @@ describe Game do
 
     expect(game_ready.moves_count).to eq(1)
   end
+
+  it 'knows that there is a draw if it makes the last move and there is no winner' do
+    allow(player_one).to receive(:place_marker).with(:A1)
+    game_ready.instance_variable_set(:@moves_count,8)
+
+    expect{ game_ready.make_move(:A1) }.to raise_error(DrawGameError, 'Draw! Nobody wins! :)')
+  end
 end

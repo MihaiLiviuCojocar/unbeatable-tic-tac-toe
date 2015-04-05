@@ -16,10 +16,10 @@ Feature: Player vs Player
     Then the game should say "Game over! Mihai wins!"
 
   Scenario: When there is a draw
-    And the grid looks like this:
+    And now the grid looks like this:
       |   | 1 | 2 | 3 |
       | A | X | X | O |
       | B | O | O | X |
       | C | X | O |   |
-    When "Mihai" places his marker at "C3"
+    When current player places his marker at "C3"
     Then the game should say "Draw! Nobody wins! :)"

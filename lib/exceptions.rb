@@ -13,3 +13,9 @@ class GameOverError < Exception
     "Game over! #{@name} wins!"
   end
 end
+
+class DrawGameError < Exception
+  def to_s
+    'Draw! Nobody wins! :)'
+  end
+end

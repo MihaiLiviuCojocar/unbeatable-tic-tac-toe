@@ -7,10 +7,8 @@ Given(/^there is a game waiting$/) do
 end
 
 Given(/^"([^"]*)" and "([^"]*)" join the game$/) do |player_one_name, player_two_name|
-  @player_one = Player.new(name: player_one_name, grid: @grid)
-  @player_two = Player.new(name: player_two_name, grid: @grid)
-  @game.add_player(@player_one)
-  @game.add_player(@player_two)
+  @game.add_player(Player.new(name: player_one_name, grid: @grid))
+  @game.add_player(Player.new(name: player_two_name, grid: @grid))
 end
 
 Given(/^"([^"]*)"'s marker is "([^"]*)"$/) do |name, marker|
@@ -22,14 +20,32 @@ Given(/^"([^"]*)"'s marker is "([^"]*)"$/) do |name, marker|
 end
 
 Given(/^the grid looks like this:$/) do |table|
-  @player_one.place_marker(:A1)
-  @player_one.place_marker(:A2)
-  @player_two.place_marker(:B2)
-  @player_two.place_marker(:C2)
+  @game.make_move(:A1)
+  @game.make_move(:B2)
+  @game.make_move(:A2)
+  @game.make_move(:C2)
+end
+
+Given(/^now the grid looks like this:$/) do |table|
+  @game.make_move(:A1)
+  @game.make_move(:B1)
+  @game.make_move(:C1)
+  @game.make_move(:B2)
+  @game.make_move(:A2)
+  @game.make_move(:A3)
+  @game.make_move(:B3)
+  @game.make_move(:C2)
 end
 
 When(/^"([^"]*)" places his marker at "([^"]*)"$/) do |name, coordinate|
   @game.find_player_by_name(name).place_marker(coordinate.to_sym)
+end
+
+When(/^current player places his marker at "([^"]*)"$/) do |at_coordinate|
+  begin
+    @game.make_move(at_coordinate.to_sym)
+  rescue DrawGameError => e
+  end
 end
 
 Then(/^the game should say "([^"]*)"$/) do |message|

@@ -36,11 +36,16 @@ class Game
 
   def switch_turns
     raise GameOverError.new(winner.name) if over?
+    raise DrawGameError if draw?
     @current_player = current_player == @player_one ? @player_two : @player_one
   end
 
   def over?
      has_two_players? and has_winner?
+  end
+
+  def draw?
+    moves_count == 9 and !has_winner?
   end
 
   def winner
@@ -53,8 +58,8 @@ class Game
 
   def make_move(at_coordinate)
     current_player.place_marker(at_coordinate)
-    switch_turns
     increase_moves_count_by_one
+    switch_turns
   end
 
   private
