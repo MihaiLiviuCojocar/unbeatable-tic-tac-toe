@@ -38,4 +38,10 @@
 
 <% if flash[:notice] %>
   <h3><%= flash[:notice] %></h3>
+
+  <a href="/reset" name="reset">Reset</a>
+<% end %>
+
+<% if flash[:cell_error] %>
+  <h3><%= flash[:cell_error] %></h3>
 <% end %>

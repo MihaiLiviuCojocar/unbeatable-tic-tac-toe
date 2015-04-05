@@ -47,12 +47,23 @@ class TicTacToe < Sinatra::Base
       game.make_move(coordinate)
     rescue GameOverError => e
       flash[:notice] = e.message
+    rescue DrawGameError => e
+      flash[:notice] = e.message
+    rescue CellAlreadyMarkedError => e
+      flash[:cell_error] = e.message
     end
     redirect '/play'
   end
 
+  get '/play_again' do
+    redirect '/play'
+  end
+
   get '/reset' do
+    grid.clear!
+    grid.set_content_with(Cell)
     game = Game.new
+    erb :index
   end
 
   # start the server if ruby file executed directly

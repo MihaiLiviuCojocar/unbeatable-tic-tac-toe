@@ -81,3 +81,7 @@ end
 Then(/^player one wins$/) do
   expect(page).to have_content "Mihai wins!"
 end
+
+Then(/^I should have the option to reset$/) do
+  expect(page).to have_link 'Reset'
+end

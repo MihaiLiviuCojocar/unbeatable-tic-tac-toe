@@ -14,3 +14,4 @@ Feature: Playing
       | C |   | O |   |
     When player one places his marker at A3
     Then player one wins
+    And I should have the option to reset

@@ -38,6 +38,10 @@ class Grid
     matrix.values.map { |cell| cell.content }.each_slice(size).to_a
   end
 
+  def clear!
+    @matrix = matrix_builder(size)
+  end
+
   private
 
   def matrix_builder(size)
