@@ -58,8 +58,8 @@ describe SolutionsCalculator do
     row_two            = double :row, winning_cell: another_empty_cell
     allow(grid).to receive(:matrix).and_return(
       {
-        A1: empty_cell, B1: 'X', C1: 'O',
-        A2: '~',        B2: '~', C2: another_empty_cell,
+        A1: empty_cell, B1: 'O', C1: 'O',
+        A2: 'X',        B2: 'X', C2: another_empty_cell,
         A3: 'O',        B3: 'X', C3: '~'
       })
     allow(solutions_calculator).to receive(:possible_combinations).and_return([
@@ -68,5 +68,24 @@ describe SolutionsCalculator do
       ])
 
     expect(solutions_calculator.winning_solutions).to eq [:A1, :C2]
+  end
+
+  it 'knows the defending solutions' do
+    empty_cell         = double :cell
+    another_empty_cell = double :cell
+    row_one            = double :row, defending_cell: empty_cell
+    row_two            = double :row, defending_cell: another_empty_cell
+    allow(grid).to receive(:matrix).and_return(
+      {
+        A1: empty_cell, B1: 'X', C1: 'X',
+        A2: 'O',        B2: 'O', C2: another_empty_cell,
+        A3: 'O',        B3: 'X', C3: '~'
+      })
+    allow(solutions_calculator).to receive(:possible_combinations).and_return([
+        row_one,
+        row_two
+      ])
+
+    expect(solutions_calculator.defending_solutions).to eq [:A1, :C2]
   end
 end

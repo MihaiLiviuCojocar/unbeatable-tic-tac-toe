@@ -29,6 +29,12 @@ class SolutionsCalculator
     end
   end
 
+  def defending_solutions
+    possible_combinations.map do |row|
+      get_key_of(row.defending_cell)
+    end
+  end
+
   private
 
   def get_key_of(cell)
