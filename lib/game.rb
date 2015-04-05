@@ -3,7 +3,7 @@ require_relative 'exceptions'
 class Game
   WINNER = Proc.new{ |player| player.winner? }
 
-  attr_reader :moves_count
+  attr_reader :moves_count, :player_one, :player_two
 
   def initialize
     @moves_count = 0
@@ -77,7 +77,7 @@ class Game
   end
 
   def players
-    [@player_one, @player_two]
+    [player_one, player_two]
   end
 
   def has_winner?
