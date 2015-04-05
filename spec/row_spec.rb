@@ -83,4 +83,10 @@ describe Row do
 
     expect(row).not_to have_to_defend
   end
+
+  it 'knows the defending cell' do
+    row = Row.new(cells: row_with_solution, marker: 'O')
+
+    expect(row.defending_cell).to eq empty_cell
+  end
 end

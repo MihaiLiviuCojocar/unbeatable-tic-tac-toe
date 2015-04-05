@@ -34,6 +34,10 @@ class Row
     has_only_enemy_marker? and has_only_one_type_of_marker?
   end
 
+  def defending_cell
+    empty_cell if has_to_defend?
+  end
+
   private
 
   def empty_cell
