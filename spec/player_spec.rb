@@ -1,5 +1,3 @@
-require 'player'
-
 describe Player do
   let(:grid)                 { double :grid                               }
   let(:solutions_calculator) { double :solutions_calculator               }

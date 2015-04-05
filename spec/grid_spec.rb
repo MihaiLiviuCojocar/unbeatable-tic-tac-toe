@@ -1,5 +1,3 @@
-require 'grid'
-
 describe Grid do
   let(:size)       { 3                    }
   let(:coordinate) { :A1                  }

@@ -1,10 +1,8 @@
-require 'game'
-
 describe Game do
   let(:game)       { Game.new                                      }
   let(:game_ready) { Game.new                                      }
   let(:player_one) { double :player, winner?: false, name: 'Mihai' }
-  let(:player_two) { double :player, winner?: false                }
+  let(:player_two) { double :player, winner?: false, name: 'Roi'   }
 
   before(:each) do
     game_ready.add_player(player_one)
@@ -80,5 +78,42 @@ describe Game do
     allow(player_one).to receive(:winner?).and_return(true)
 
     expect{game_ready.switch_turns}.to raise_error('Game over! Mihai wins!')
+  end
+
+  it 'can find a player by name' do
+    expect(game_ready.find_player_by_name('Mihai')).to eq(player_one)
+  end
+
+  it 'makes a move for the current player' do
+    expect(player_one).to receive(:place_marker).with(:A1)
+
+    game_ready.make_move(:A1)
+  end
+
+  it 'switches the turnes after making a move' do
+    allow(player_one).to receive(:place_marker).with(:A1)
+
+    game_ready.make_move(:A1)
+
+    expect(game_ready.current_player).to eq(player_two)
+  end
+
+  it 'knows that has zerro moves when initialized' do
+    expect(game_ready.moves_count).to eq(0)
+  end
+
+  it 'knows that it has one move after making one' do
+    allow(player_one).to receive(:place_marker).with(:A1)
+
+    game_ready.make_move(:A1)
+
+    expect(game_ready.moves_count).to eq(1)
+  end
+
+  it 'knows that there is a draw if it makes the last move and there is no winner' do
+    allow(player_one).to receive(:place_marker).with(:A1)
+    game_ready.instance_variable_set(:@moves_count,8)
+
+    expect{ game_ready.make_move(:A1) }.to raise_error(DrawGameError, 'Draw! Nobody wins! :)')
   end
 end
