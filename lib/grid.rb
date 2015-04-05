@@ -1,5 +1,5 @@
 class Grid
-  DEFAULT_SIZE = 1
+  DEFAULT_SIZE       = 1
 
   attr_reader :size
 
@@ -40,6 +40,22 @@ class Grid
 
   def clear!
     @matrix = matrix_builder(size)
+  end
+
+  def has_middle_free?
+    !get_content(middle_coordinate).has_content?
+  end
+
+  def middle_coordinate
+    :B2
+  end
+
+  def middle_coordinates
+    [:A2, :B1, :B3, :C2]
+  end
+
+  def corner_coordinates
+    [:A1, :A3, :C1, :C3]
   end
 
   private
