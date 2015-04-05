@@ -2,7 +2,7 @@ require 'sinatra/base'
 
 class TicTacToe < Sinatra::Base
   get '/' do
-    'Hello TicTacToe!'
+    erb :index
   end
 
   # start the server if ruby file executed directly
