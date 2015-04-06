@@ -17,10 +17,6 @@ Feature: Player vs Computer
 
   @AndIwillwalk500miles
   Scenario: Computer is unbeatable
-    Given there is a game waiting
-    And "Computer 1" joins the game
-    And "Computer 2" joins the game
-    And "Computer 1"'s marker is "X"
-    And "Computer 2"'s marker is "O"
+    Given there is a game with two computers
     When they play against eachother
     Then no one should win
