@@ -15,4 +15,4 @@ You are to create a game that allows me to play TicTacToe against an unbeatable 
 
 When run `cucumber features/player_vs_computer.feature:19` then you shoud see something like this:
 
-![](https://github.com/MihaiLiviuCojocar/unbeatable-tic-tac-toe/blob/master/public/images/ai_vs_ai.png)
+![](https://raw.githubusercontent.com/MihaiLiviuCojocar/unbeatable-tic-tac-toe/master/public/images/ai_vs_ai.png)
