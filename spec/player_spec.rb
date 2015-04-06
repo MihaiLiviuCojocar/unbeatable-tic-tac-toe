@@ -26,6 +26,10 @@ describe Player do
       player.solutions_calculator = solutions_calculator
       expect(player.solutions_calculator).to eq solutions_calculator
     end
+
+    it 'knows that he made no move yet' do
+      expect(player.moves_count).to eq(0)
+    end
   end
 
   context 'making a move' do
@@ -40,6 +44,15 @@ describe Player do
       expect(grid).to receive(:place_marker).with(:A1, :zerro)
 
       player.place_marker(:A1)
+    end
+
+    it 'knows that he made one move after making one' do
+      allow(solutions_calculator).to receive(:winning_solutions).and_return([])
+      allow(grid).to receive(:place_marker).with(:A1, :zerro)
+
+      player.place_marker(:A1)
+
+      expect(player.moves_count).to eq(1)
     end
 
     it 'knwos the winning solutions' do
