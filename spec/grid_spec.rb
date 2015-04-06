@@ -1,8 +1,10 @@
 describe Grid do
-  let(:size)       { 3                    }
-  let(:coordinate) { :A1                  }
-  let(:cell)       { double :cell         }
-  let(:grid)       { Grid.new(size: size) }
+  let(:size)       { 3                                 }
+  let(:coordinate) { :A1                               }
+  let(:cell)       { double :cell_class                }
+  let(:empty_cell) { double :cell, has_content?: false }
+  let(:full_cell)  { double :cell, has_content?: true  }
+  let(:grid)       { Grid.new(size: size)              }
 
   it 'can be one by one' do
     grid = Grid.new
@@ -36,5 +38,24 @@ describe Grid do
     expect(cell).to receive(:content=).with(marker)
 
     grid.place_marker(coordinate, marker)
+  end
+
+  it 'knows if the midlle is free' do
+    allow(grid).to receive(:get_content).with(grid.middle_coordinate).and_return(empty_cell)
+
+    expect(grid).to have_middle_free
+  end
+
+  it 'knows if the midlle is not free' do
+    allow(grid).to receive(:get_content).with(grid.middle_coordinate).and_return(full_cell)
+
+    expect(grid).not_to have_middle_free
+  end
+
+  it 'has a list of all available cells' do
+    grid = Grid.new(size: 1)
+    grid.set_content(content: empty_cell)
+
+    expect(grid.available_cells_coordinates).to eq([:A1])
   end
 end

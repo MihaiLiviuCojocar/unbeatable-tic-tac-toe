@@ -19,3 +19,7 @@ end
 World do
   TicTacToeWorld.new
 end
+
+Around('@AndIwillwalk500miles') do |scenario, block|
+  500.times { block.call }
+end

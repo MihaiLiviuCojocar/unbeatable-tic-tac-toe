@@ -26,12 +26,70 @@ class SolutionsCalculator
   def winning_solutions
     possible_combinations.map do |row|
       get_key_of(row.winning_cell)
-    end
+    end.compact
+  end
+
+  def defending_solutions
+    possible_combinations.map do |row|
+      get_key_of(row.defending_cell)
+    end.compact
+  end
+
+  def first_move_recommendation
+    recommend_middle or recommend_a_corner
+  end
+
+  def need_to_defend?
+    defending_solutions.any?
+  end
+
+  def second_move_recommendation
+    recommend_a_defending_solution or recommend_the_middle_of_a_line
+  end
+
+  def any_opportunity_to_win?
+    winning_solutions.any?
+  end
+
+  def recommend_winning_solution
+    winning_solutions.sample if any_opportunity_to_win?
+  end
+
+  def third_move_recommendation
+    recommend_winning_solution or recommend_a_defending_solution or recommend_the_middle_of_a_line
+  end
+
+  def recommendation
+    recommend_winning_solution or recommend_a_defending_solution or recommend_an_empty_cell
   end
 
   private
 
   def get_key_of(cell)
     grid.matrix.key(cell)
+  end
+
+  def recommend_a_corner
+    grid.corner_coordinates.sample
+  end
+
+  def recommend_middle
+    grid.middle_coordinate if grid.has_middle_free?
+  end
+
+  def recommend_the_middle_of_a_line
+    coord = grid.middle_line_coordinates.sample
+    until grid.available_cells_coordinates.include?(coord) do
+      coord = grid.middle_line_coordinates.sample
+    end
+    coord
+  end
+
+  def recommend_a_defending_solution
+    defending_solutions.first if need_to_defend?
+  end
+
+  def recommend_an_empty_cell
+    grid.available_cells_coordinates.sample
   end
 end
