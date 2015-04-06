@@ -11,17 +11,9 @@ Then(/^the computer should move at "([^"]*)"$/) do |coordinate|
 end
 
 When(/^they play against eachother$/) do
-  @game.make_move(@game.current_player.solutions_calculator.first_move_recommendation)
-  @game.make_move(@game.current_player.solutions_calculator.first_move_recommendation)
-  @game.make_move(@game.current_player.solutions_calculator.second_move_recommendation)
-  @game.make_move(@game.current_player.solutions_calculator.second_move_recommendation)
-  @game.make_move(@game.current_player.solutions_calculator.third_move_recommendation)
-  @game.make_move(@game.current_player.solutions_calculator.third_move_recommendation)
-  @game.make_move(@game.current_player.solutions_calculator.recommendation)
-  @game.make_move(@game.current_player.solutions_calculator.recommendation)
+  8.times { @game.make_move(@game.current_player.ask_for_recommendation) }
 end
 
 Then(/^no one should win$/) do
-  coord = @game.current_player.solutions_calculator.recommendation
-  expect{ @game.make_move(coord) }.to raise_error(DrawGameError)
+  expect{ @game.make_move(@game.current_player.ask_for_recommendation) }.to raise_error(DrawGameError)
 end

@@ -51,8 +51,9 @@ describe Game do
   end
 
   it 'can switch turns' do
-    allow(player_one).to receive(:all_moves_done?).and_return(false)
-    allow(player_two).to receive(:all_moves_done?).and_return(false)
+    allow(player_one).to receive(:moves_count).and_return(0)
+    allow(player_two).to receive(:moves_count).and_return(0)
+
     game_ready.switch_turns
 
     expect(game_ready.current_player).to eq(player_two)
@@ -87,8 +88,8 @@ describe Game do
   end
 
   it 'makes a move for the current player' do
-    allow(player_one).to receive(:all_moves_done?).and_return(false)
-    allow(player_two).to receive(:all_moves_done?).and_return(false)
+    allow(player_one).to receive(:moves_count).and_return(0)
+    allow(player_two).to receive(:moves_count).and_return(0)
 
     expect(player_one).to receive(:place_marker).with(:A1)
 
@@ -96,8 +97,8 @@ describe Game do
   end
 
   it 'switches the turnes after making a move' do
-    allow(player_one).to receive(:all_moves_done?).and_return(false)
-    allow(player_two).to receive(:all_moves_done?).and_return(false)
+    allow(player_one).to receive(:moves_count).and_return(0)
+    allow(player_two).to receive(:moves_count).and_return(0)
     allow(player_one).to receive(:place_marker).with(:A1)
 
     game_ready.make_move(:A1)
@@ -106,8 +107,8 @@ describe Game do
   end
 
   it 'knows that there is a draw if it makes the last move and there is no winner' do
-    allow(player_one).to receive(:all_moves_done?).and_return(true)
-    allow(player_two).to receive(:all_moves_done?).and_return(true)
+    allow(player_one).to receive(:moves_count).and_return(5)
+    allow(player_two).to receive(:moves_count).and_return(4)
     allow(player_one).to receive(:place_marker).with(:A1)
 
     expect{ game_ready.make_move(:A1) }.to raise_error(DrawGameError, 'Draw! Nobody wins! :)')
