@@ -26,6 +26,10 @@ describe Player do
       player.solutions_calculator = solutions_calculator
       expect(player.solutions_calculator).to eq solutions_calculator
     end
+
+    it 'knows that he made no move yet' do
+      expect(player.moves_count).to eq(0)
+    end
   end
 
   context 'making a move' do

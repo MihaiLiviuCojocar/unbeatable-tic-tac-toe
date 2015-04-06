@@ -21,6 +21,10 @@ class Player
     solutions_calculator.winning_solutions
   end
 
+  def moves_count
+    0
+  end
+
   private
 
   def become_winner
