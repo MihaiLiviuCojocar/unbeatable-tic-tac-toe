@@ -41,14 +41,6 @@ class Game
      has_two_players? and has_winner?
   end
 
-  def draw?
-     all_moves_done? and !has_winner?
-  end
-
-  def all_moves_done?
-    player_one.moves_count + player_two.moves_count == MAX_NUMBER_OF_MOVES
-  end
-
   def winner
     players.select(&WINNER).first
   end
@@ -78,5 +70,13 @@ class Game
 
   def has_winner?
     !winner.nil?
+  end
+
+  def all_moves_done?
+    player_one.moves_count + player_two.moves_count == MAX_NUMBER_OF_MOVES
+  end
+
+  def draw?
+     all_moves_done? and !has_winner?
   end
 end
