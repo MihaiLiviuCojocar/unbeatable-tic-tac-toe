@@ -1,6 +1,4 @@
 class Player
-  MAX_NUMBER_OF_MOVES = 9
-
   attr_reader   :name,   :grid, :moves_count
   attr_accessor :marker, :solutions_calculator
 
@@ -23,10 +21,6 @@ class Player
 
   def winning_solutions
     solutions_calculator.winning_solutions
-  end
-
-  def all_moves_done?
-    moves_count == MAX_NUMBER_OF_MOVES
   end
 
   private

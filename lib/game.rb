@@ -1,7 +1,8 @@
 require_relative 'exceptions'
 
 class Game
-  WINNER = Proc.new{ |player| player.winner? }
+  MAX_NUMBER_OF_MOVES = 9
+  WINNER              = Proc.new{ |player| player.winner? }
 
   attr_reader :player_one, :player_two
 
@@ -41,7 +42,11 @@ class Game
   end
 
   def draw?
-    both_players_have_made_their_moves and !has_winner?
+     all_moves_done? and !has_winner?
+  end
+
+  def all_moves_done?
+    player_one.moves_count + player_two.moves_count == MAX_NUMBER_OF_MOVES
   end
 
   def winner
@@ -58,10 +63,6 @@ class Game
   end
 
   private
-
-  def both_players_have_made_their_moves
-    player_one.all_moves_done? and player_two.all_moves_done?
-  end
 
   def add_player_one(player)
     @player_one = player
