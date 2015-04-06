@@ -46,6 +46,15 @@ describe Player do
       player.place_marker(:A1)
     end
 
+    it 'knows that he made one move after making one' do
+      allow(solutions_calculator).to receive(:winning_solutions).and_return([])
+      allow(grid).to receive(:place_marker).with(:A1, :zerro)
+
+      player.place_marker(:A1)
+
+      expect(player.moves_count).to eq(1)
+    end
+
     it 'knwos the winning solutions' do
       expect(solutions_calculator).to receive(:winning_solutions)
 
