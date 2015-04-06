@@ -3,11 +3,7 @@ require_relative 'exceptions'
 class Game
   WINNER = Proc.new{ |player| player.winner? }
 
-  attr_reader :moves_count, :player_one, :player_two
-
-  def initialize
-    @moves_count = 0
-  end
+  attr_reader :player_one, :player_two
 
   def has_two_players?
     has_player_one? and has_player_two?
@@ -45,7 +41,7 @@ class Game
   end
 
   def draw?
-    moves_count == 9 and !has_winner?
+    both_players_have_made_their_moves and !has_winner?
   end
 
   def winner
@@ -58,14 +54,13 @@ class Game
 
   def make_move(at_coordinate)
     current_player.place_marker(at_coordinate)
-    increase_moves_count_by_one
     switch_turns
   end
 
   private
 
-  def increase_moves_count_by_one
-    @moves_count += 1
+  def both_players_have_made_their_moves
+    player_one.all_moves_done? and player_two.all_moves_done?
   end
 
   def add_player_one(player)
