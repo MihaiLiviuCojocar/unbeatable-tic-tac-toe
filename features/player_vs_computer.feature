@@ -15,7 +15,7 @@ Feature: Player vs Computer
       | C |   | O |   |
     Then the computer should move at "A3"
 
-  @AndIwillwalk500miles
+  # @AndIwillwalk500miles
   Scenario: Computer is unbeatable
     Given there is a game with two computers
     When they play against eachother
