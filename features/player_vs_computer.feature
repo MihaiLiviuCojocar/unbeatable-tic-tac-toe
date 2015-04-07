@@ -4,7 +4,6 @@ Feature: Player vs Computer
     Given there is a game waiting
     And player one is a computer
     And "Mihai" joins the game
-    And "Computer"'s marker is "X"
     And "Mihai"'s marker is "O"
 
   Scenario: Computer wins when has the opportunity

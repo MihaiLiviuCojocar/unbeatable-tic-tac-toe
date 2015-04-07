@@ -3,7 +3,7 @@ Given(/^"([^"]*)" joins the game$/) do |name|
 end
 
 Given(/^player one is a computer$/) do
-  @game.add_player(Ai.new(grid: @grid))
+  add_computer_as_player_one
 end
 
 Then(/^the computer should move at "([^"]*)"$/) do |coordinate|
