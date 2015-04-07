@@ -14,9 +14,3 @@ Feature: Player vs Computer
       | B |   | O |   |
       | C |   | O |   |
     Then the computer should move at "A3"
-
-  @AndIwillwalk500miles
-  Scenario: Computer is unbeatable
-    Given there is a game with two computers
-    When they play against eachother
-    Then no one should win
