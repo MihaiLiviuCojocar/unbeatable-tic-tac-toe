@@ -10,10 +10,11 @@ Given(/^"([^"]*)" and "([^"]*)" join the game$/) do |player_one_name, player_two
 end
 
 Given(/^"([^"]*)"'s marker is "([^"]*)"$/) do |name, marker|
-  @game.find_player_by_name(name).marker = marker
-  @game.find_player_by_name(name).solutions_calculator = SolutionsCalculator.new(
-    grid:   @game.find_player_by_name(name).grid,
-    marker: @game.find_player_by_name(name).marker,
+  player = @game.find_player_by_name(name)
+  player.marker = marker
+  player.solutions_calculator = SolutionsCalculator.new(
+    grid:   player.grid,
+    marker: player.marker,
   )
 end
 

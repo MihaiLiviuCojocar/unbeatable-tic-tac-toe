@@ -7,5 +7,6 @@ Given(/^player one is a computer$/) do
 end
 
 Then(/^the computer should move at "([^"]*)"$/) do |coordinate|
-  expect(@game.current_player.solutions_calculator.recommendation).to eq coordinate.to_sym
+  recommended_coordinate = @game.current_player.solutions_calculator.recommendation
+  expect(recommended_coordinate).to eq coordinate.to_sym
 end
