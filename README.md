@@ -17,6 +17,6 @@ You are to create a game that allows me to play TicTacToe against an unbeatable 
 
 `cucumber`
 
-When run `ccucumber features/computer_is_unbeatable.feature` then you shoud see something like this(!! this test is run 500 times !!):
+When run `cucumber features/computer_is_unbeatable.feature` then you shoud see something like this(!! this test is run 500 times !!):
 
 ![](https://raw.githubusercontent.com/MihaiLiviuCojocar/unbeatable-tic-tac-toe/master/public/images/ai_vs_ai2.png)
