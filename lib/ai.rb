@@ -15,14 +15,18 @@ class Ai < Player
   private
 
   def first_move?
-    moves_count == 0
+    at_current_move?(0)
   end
 
   def second_move?
-    moves_count == 1
+    at_current_move?(1)
   end
 
   def third_move?
-    moves_count == 2
+    at_current_move?(2)
+  end
+
+  def at_current_move?(move)
+    moves_count == move
   end
 end
