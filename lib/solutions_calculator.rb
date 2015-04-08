@@ -41,22 +41,9 @@ class SolutionsCalculator
     end.compact
   end
 
-
-  def reccomend_corner_in_proximity_of(coord)
-    MIDDLE_LINES_CELLS[coord].sample
-  end
-
-  def find_which_middle_line
-    grid.middle_line_coordinates.select { |coord| grid.get_content(coord).has_content? }.first
-  end
-
   def first_move_recommendation
     return reccomend_corner_in_proximity_of(find_which_middle_line) if enemy_took_middle_line?
     recommend_middle or recommend_a_corner
-  end
-
-  def enemy_took_middle_line?
-    grid.middle_line_coordinates.any? { |coord| grid.get_content(coord).has_content? }
   end
 
   def need_to_defend?
@@ -131,5 +118,17 @@ class SolutionsCalculator
 
   def recommend_an_empty_cell
     grid.available_cells_coordinates.sample
+  end
+
+  def reccomend_corner_in_proximity_of(coord)
+    MIDDLE_LINES_CELLS[coord].sample
+  end
+
+  def find_which_middle_line
+    grid.middle_line_coordinates.select { |coord| grid.get_content(coord).has_content? }.first
+  end
+
+  def enemy_took_middle_line?
+    grid.middle_line_coordinates.any? { |coord| grid.get_content(coord).has_content? }
   end
 end
