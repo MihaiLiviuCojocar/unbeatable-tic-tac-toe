@@ -44,7 +44,11 @@ class SolutionsCalculator
   end
 
   def second_move_recommendation
-    recommend_a_defending_solution or recommend_the_middle_of_a_line
+    if middle_is_mine?
+      recommend_a_defending_solution or recommend_the_middle_of_a_line
+    else
+      recommend_a_defending_solution or recommend_a_corner
+    end
   end
 
   def any_opportunity_to_win?
@@ -65,12 +69,20 @@ class SolutionsCalculator
 
   private
 
+  def middle_is_mine?
+    grid.get_content(grid.middle_coordinate).content == marker
+  end
+
   def get_key_of(cell)
     grid.matrix.key(cell)
   end
 
   def recommend_a_corner
-    grid.corner_coordinates.sample
+    coord = grid.corner_coordinates.sample
+    until grid.available_cells_coordinates.include?(coord) do
+      coord = grid.corner_coordinates.sample
+    end
+    coord
   end
 
   def recommend_middle
