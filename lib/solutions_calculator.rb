@@ -56,7 +56,7 @@ class SolutionsCalculator
   end
 
   def recommend_winning_solution
-    winning_solutions.sample
+    winning_solutions.sample if any_opportunity_to_win?
   end
 
   def third_move_recommendation
@@ -105,7 +105,7 @@ class SolutionsCalculator
   end
 
   def recommend_a_defending_solution
-    defending_solutions.first
+    defending_solutions.first if need_to_defend?
   end
 
   def recommend_an_empty_cell
