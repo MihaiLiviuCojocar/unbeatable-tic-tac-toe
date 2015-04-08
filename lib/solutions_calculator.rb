@@ -1,6 +1,12 @@
 class SolutionsCalculator
   attr_reader :grid, :marker
 
+  MIDDLE_LINES_CELLS = {
+    A2: [:A1, :A3],
+    B1: [:A1, :C1],
+    B3: [:A3, :C3],
+    C2: [:C1, :C3]
+  }
   POSSIBLE_COMBINATIONS = [
     [:A1, :B1, :C1],
     [:A2, :B2, :C2],
@@ -35,7 +41,6 @@ class SolutionsCalculator
     end.compact
   end
 
-  MIDDLE_LINES_CELLS = {A2: [:A1, :A3], B1: [:A1, :C1], B3: [:A3, :C3], C2: [:C1, :C3]}
 
   def reccomend_corner_in_proximity_of(coord)
     MIDDLE_LINES_CELLS[coord].sample
@@ -51,7 +56,7 @@ class SolutionsCalculator
   end
 
   def enemy_took_middle_line?
-    grid.middle_line_coordinates.any? { |coord| grid.matrix[coord].has_content? }
+    grid.middle_line_coordinates.any? { |coord| grid.get_content(coord).has_content? }
   end
 
   def need_to_defend?
@@ -61,13 +66,8 @@ class SolutionsCalculator
   def second_move_recommendation
     return recommend_a_defending_solution if need_to_defend?
     return recommend_middle if grid.has_middle_free?
-    if middle_is_mine?
-      return recommend_a_defending_solution if need_to_defend?
-      return recommend_the_middle_of_a_line
-    else
-      return recommend_a_defending_solution if need_to_defend?
-      recommend_a_corner
-    end
+    return recommend_the_middle_of_a_line if middle_is_mine?
+    recommend_a_corner
   end
 
   def any_opportunity_to_win?

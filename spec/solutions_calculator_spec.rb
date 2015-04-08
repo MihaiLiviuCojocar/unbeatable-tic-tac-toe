@@ -95,6 +95,7 @@ describe SolutionsCalculator do
     context 'first move' do
       context 'when the middle is free' do
         it 'recommends the middle' do
+          allow(solutions_calculator).to receive(:enemy_took_middle_line?).and_return(false)
           allow(grid).to receive(:has_middle_free?).and_return(true)
           allow(grid).to receive(:middle_coordinate).and_return(:B2)
 
@@ -104,9 +105,9 @@ describe SolutionsCalculator do
 
       context 'when the middle is not free' do
         it 'recommends a corner' do
-          allow(grid).to receive(:has_middle_free?).and_return(false)
-          allow(grid).to receive(:available_cells_coordinates).and_return([:A1])
-          allow(grid).to receive(:corner_coordinates).and_return([:A1])
+          allow(solutions_calculator).to receive(:enemy_took_middle_line?).and_return(true)
+          allow(solutions_calculator).to receive(:find_which_middle_line).and_return(:A2)
+          allow(solutions_calculator).to receive(:reccomend_corner_in_proximity_of).and_return(:A1)
 
           expect(solutions_calculator.first_move_recommendation).to eq(:A1)
         end
@@ -128,26 +129,42 @@ describe SolutionsCalculator do
 
       it 'makes a recommandation to defend' do
         allow(solutions_calculator).to receive(:defending_solutions).and_return([:A1])
-        allow(solutions_calculator).to receive(:middle_is_mine?)
 
         expect(solutions_calculator.second_move_recommendation).to eq(:A1)
       end
 
       it 'makes a recommandation to defend' do
         allow(solutions_calculator).to receive(:defending_solutions).and_return([:C1])
-        allow(solutions_calculator).to receive(:middle_is_mine?)
 
         expect(solutions_calculator.second_move_recommendation).to eq(:C1)
       end
 
-      it 'recommends the middle of a line if doesnt need defending' do
+      it 'recommends the middle of a line if it doesnt need defending and the middle is free' do
         allow(solutions_calculator).to receive(:need_to_defend?).and_return(false)
+        allow(grid).to receive(:middle_coordinate).and_return(:B2)
+        allow(grid).to receive(:has_middle_free?).and_return(true)
+
+        expect(solutions_calculator.second_move_recommendation).to eq(:B2)
+      end
+
+      it 'recommends the middle of a line if it doesnt need defending and the middle is mine' do
+        allow(solutions_calculator).to receive(:need_to_defend?).and_return(false)
+        allow(grid).to receive(:has_middle_free?).and_return(false)
         allow(grid).to receive(:middle_line_coordinates).and_return([:A2])
-        allow(grid).to receive(:corner_coordinates).and_return([:A2])
         allow(grid).to receive(:available_cells_coordinates).and_return([:A2])
-        allow(solutions_calculator).to receive(:middle_is_mine?)
+        allow(solutions_calculator).to receive(:middle_is_mine?).and_return(true)
 
         expect(solutions_calculator.second_move_recommendation).to eq(:A2)
+      end
+
+      it 'recommends a corner if it doesnt need defending and the middle is not mine' do
+        allow(solutions_calculator).to receive(:need_to_defend?).and_return(false)
+        allow(grid).to receive(:has_middle_free?).and_return(false)
+        allow(grid).to receive(:corner_coordinates).and_return([:A1])
+        allow(grid).to receive(:available_cells_coordinates).and_return([:A1])
+        allow(solutions_calculator).to receive(:middle_is_mine?).and_return(false)
+
+        expect(solutions_calculator.second_move_recommendation).to eq(:A1)
       end
     end
 
