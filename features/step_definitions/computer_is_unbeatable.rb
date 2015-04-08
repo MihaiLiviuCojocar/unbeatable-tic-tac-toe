@@ -5,7 +5,10 @@ Given(/^there is a game with two computers$/) do
 end
 
 When(/^they play against eachother$/) do
-  8.times { @game.make_move(@game.current_player.ask_for_recommendation) }
+  8.times do
+    coord = @game.current_player.ask_for_recommendation
+    @game.make_move(coord)
+   end
 end
 
 Then(/^no one should win$/) do

@@ -128,12 +128,14 @@ describe SolutionsCalculator do
 
       it 'makes a recommandation to defend' do
         allow(solutions_calculator).to receive(:defending_solutions).and_return([:A1])
+        allow(solutions_calculator).to receive(:middle_is_mine?)
 
         expect(solutions_calculator.second_move_recommendation).to eq(:A1)
       end
 
       it 'makes a recommandation to defend' do
         allow(solutions_calculator).to receive(:defending_solutions).and_return([:C1])
+        allow(solutions_calculator).to receive(:middle_is_mine?)
 
         expect(solutions_calculator.second_move_recommendation).to eq(:C1)
       end
@@ -143,6 +145,7 @@ describe SolutionsCalculator do
         allow(grid).to receive(:middle_line_coordinates).and_return([:A2])
         allow(grid).to receive(:corner_coordinates).and_return([:A2])
         allow(grid).to receive(:available_cells_coordinates).and_return([:A2])
+        allow(solutions_calculator).to receive(:middle_is_mine?)
 
         expect(solutions_calculator.second_move_recommendation).to eq(:A2)
       end
