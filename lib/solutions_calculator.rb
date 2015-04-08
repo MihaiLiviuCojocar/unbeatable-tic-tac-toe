@@ -56,11 +56,14 @@ class SolutionsCalculator
   end
 
   def recommend_winning_solution
-    winning_solutions.sample if any_opportunity_to_win?
+    winning_solutions.sample
   end
 
   def third_move_recommendation
-    recommend_winning_solution or recommend_a_defending_solution or recommend_the_middle_of_a_line
+    recommend_winning_solution if any_opportunity_to_win?
+    recommend_a_defending_solution if need_to_defend?
+    recommend_the_middle_of_a_line if any_middle_line_cell_free?
+    recommend_an_empty_cell
   end
 
   def recommendation
@@ -68,6 +71,10 @@ class SolutionsCalculator
   end
 
   private
+
+  def any_middle_line_cell_free?
+    grid.middle_line_coordinates.all? { |coord| !grid.matrix[coord].has_content? }
+  end
 
   def middle_is_mine?
     grid.get_content(grid.middle_coordinate).content == marker
@@ -98,7 +105,7 @@ class SolutionsCalculator
   end
 
   def recommend_a_defending_solution
-    defending_solutions.first if need_to_defend?
+    defending_solutions.first
   end
 
   def recommend_an_empty_cell
