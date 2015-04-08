@@ -35,8 +35,23 @@ class SolutionsCalculator
     end.compact
   end
 
+  MIDDLE_LINES_CELLS = {A2: [:A1, :A3], B1: [:A1, :C1], B3: [:A3, :C3], C2: [:C1, :C3]}
+
+  def reccomend_corner_in_proximity_of(coord)
+    MIDDLE_LINES_CELLS[coord].sample
+  end
+
+  def find_which_middle_line
+    grid.middle_line_coordinates.select { |coord| grid.get_content(coord).has_content? }.first
+  end
+
   def first_move_recommendation
+    return reccomend_corner_in_proximity_of(find_which_middle_line) if enemy_took_middle_line?
     recommend_middle or recommend_a_corner
+  end
+
+  def enemy_took_middle_line?
+    grid.middle_line_coordinates.any? { |coord| grid.matrix[coord].has_content? }
   end
 
   def need_to_defend?
@@ -44,6 +59,8 @@ class SolutionsCalculator
   end
 
   def second_move_recommendation
+    return recommend_a_defending_solution if need_to_defend?
+    return recommend_middle if grid.has_middle_free?
     if middle_is_mine?
       return recommend_a_defending_solution if need_to_defend?
       return recommend_the_middle_of_a_line
