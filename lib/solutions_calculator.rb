@@ -1,6 +1,12 @@
 class SolutionsCalculator
   attr_reader :grid, :marker
 
+  MIDDLE_LINES_CELLS = {
+    A2: [:A1, :A3],
+    B1: [:A1, :C1],
+    B3: [:A3, :C3],
+    C2: [:C1, :C3]
+  }
   POSSIBLE_COMBINATIONS = [
     [:A1, :B1, :C1],
     [:A2, :B2, :C2],
@@ -35,30 +41,25 @@ class SolutionsCalculator
     end.compact
   end
 
-  def first_move_recommendation
-    recommend_middle or recommend_a_corner
+  def recommend_winning_solution
+    winning_solutions.sample
   end
 
-  def need_to_defend?
-    defending_solutions.any?
+  def nobody_moved_yet?
+    grid.coordinates.all? { |coord| !grid.matrix[coord].has_content? }
+  end
+
+  def first_move_recommendation
+    return recommend_a_corner if nobody_moved_yet?
+    return recommend_corner_in_proximity_of(find_which_middle_line) if enemy_took_middle_line?
+    recommend_middle
   end
 
   def second_move_recommendation
-    if middle_is_mine?
-      return recommend_a_defending_solution if need_to_defend?
-      return recommend_the_middle_of_a_line
-    else
-      return recommend_a_defending_solution if need_to_defend?
-      recommend_a_corner
-    end
-  end
-
-  def any_opportunity_to_win?
-    winning_solutions.any?
-  end
-
-  def recommend_winning_solution
-    winning_solutions.sample
+    return recommend_a_defending_solution if need_to_defend?
+    return recommend_middle if grid.has_middle_free?
+    return recommend_the_middle_of_a_line if middle_is_mine?
+    recommend_a_corner
   end
 
   def third_move_recommendation
@@ -72,6 +73,14 @@ class SolutionsCalculator
     return recommend_winning_solution if any_opportunity_to_win?
     return recommend_a_defending_solution if need_to_defend?
     recommend_an_empty_cell
+  end
+
+  def need_to_defend?
+    defending_solutions.any?
+  end
+
+  def any_opportunity_to_win?
+    winning_solutions.any?
   end
 
   private
@@ -114,5 +123,17 @@ class SolutionsCalculator
 
   def recommend_an_empty_cell
     grid.available_cells_coordinates.sample
+  end
+
+  def recommend_corner_in_proximity_of(coord)
+    MIDDLE_LINES_CELLS[coord].sample
+  end
+
+  def find_which_middle_line
+    grid.middle_line_coordinates.select { |coord| grid.get_content(coord).has_content? }.first
+  end
+
+  def enemy_took_middle_line?
+    grid.middle_line_coordinates.any? { |coord| grid.get_content(coord).has_content? }
   end
 end
