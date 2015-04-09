@@ -180,11 +180,58 @@ describe SolutionsCalculator do
             end
           end
         end
-
       end
     end
 
-    context 'after the second move' do
+    context 'third move' do
+      context 'if there is an opportunity to win' do
+        it 'recommends one' do
+          allow(solutions_calculator).to receive(:winning_solutions).and_return([:A1])
+
+          expect(solutions_calculator.third_move_recommendation).to eq(:A1)
+        end
+      end
+
+      context 'if there is no opportunity to win' do
+        before do
+          allow(solutions_calculator).to receive(:any_opportunity_to_win?).and_return(false)
+        end
+
+        context 'and it needs defending' do
+          it 'recommends a defending solution' do
+            allow(solutions_calculator).to receive(:defending_solutions).and_return([:A1])
+
+            expect(solutions_calculator.third_move_recommendation).to eq(:A1)
+          end
+        end
+
+        context "doesn't need defending" do
+          before do
+            allow(solutions_calculator).to receive(:need_to_defend?).and_return(false)
+            allow(grid).to receive(:middle_line_coordinates).and_return([:A2])
+            allow(grid).to receive(:available_cells_coordinates).and_return([:A2])
+          end
+
+          context 'and there is a middle line free' do
+            it 'recommends the middle of a line' do
+              allow(solutions_calculator).to receive(:any_middle_line_cell_free?).and_return(true)
+
+              expect(solutions_calculator.third_move_recommendation).to eq(:A2)
+            end
+          end
+
+          context 'and there is no middle line free' do
+            it 'reccomends an empty cell' do
+              allow(solutions_calculator).to receive(:any_middle_line_cell_free?).and_return(false)
+
+              expect(solutions_calculator.third_move_recommendation).to eq(:A2)
+            end
+          end
+        end
+      end
+    end
+
+    context 'after the third move' do
       it 'knows if it can win' do
         allow(solutions_calculator).to receive(:winning_solutions).and_return([:A1])
 
