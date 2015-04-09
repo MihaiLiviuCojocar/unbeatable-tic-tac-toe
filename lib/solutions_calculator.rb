@@ -41,13 +41,13 @@ class SolutionsCalculator
     end.compact
   end
 
+  def recommend_winning_solution
+    winning_solutions.sample
+  end
+
   def first_move_recommendation
     return reccomend_corner_in_proximity_of(find_which_middle_line) if enemy_took_middle_line?
     recommend_middle or recommend_a_corner
-  end
-
-  def need_to_defend?
-    defending_solutions.any?
   end
 
   def second_move_recommendation
@@ -55,14 +55,6 @@ class SolutionsCalculator
     return recommend_middle if grid.has_middle_free?
     return recommend_the_middle_of_a_line if middle_is_mine?
     recommend_a_corner
-  end
-
-  def any_opportunity_to_win?
-    winning_solutions.any?
-  end
-
-  def recommend_winning_solution
-    winning_solutions.sample
   end
 
   def third_move_recommendation
@@ -76,6 +68,14 @@ class SolutionsCalculator
     return recommend_winning_solution if any_opportunity_to_win?
     return recommend_a_defending_solution if need_to_defend?
     recommend_an_empty_cell
+  end
+
+  def need_to_defend?
+    defending_solutions.any?
+  end
+
+  def any_opportunity_to_win?
+    winning_solutions.any?
   end
 
   private
