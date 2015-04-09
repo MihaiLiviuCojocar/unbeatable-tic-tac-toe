@@ -9,7 +9,7 @@ I build this version of the game without any research on any other existing meth
 ## Installation
 `git clone git@github.com:MihaiLiviuCojocar/unbeatable-tic-tac-toe.git`
 
-`cd tic-tac-toe-V2`
+`cd unbeatable-tic-tac-toe`
 
 `bundle install`
 
@@ -22,8 +22,6 @@ Click [here](http://localhost:9292).
 Have fun! :)
 
 ## Running the tests
-
-`cd tic-tac-toe-V2`
 
 `rspec`
 
