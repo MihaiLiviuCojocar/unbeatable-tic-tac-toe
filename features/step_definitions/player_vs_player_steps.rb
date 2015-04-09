@@ -1,9 +1,7 @@
 require './spec/spec_helper'
 
 Given(/^there is a game waiting$/) do
-  @game = Game.new
-  @grid = Grid.new(size: 3)
-  @grid.set_content_with(Cell)
+  prepare_a_new_game
 end
 
 Given(/^"([^"]*)" and "([^"]*)" join the game$/) do |player_one_name, player_two_name|
@@ -12,29 +10,22 @@ Given(/^"([^"]*)" and "([^"]*)" join the game$/) do |player_one_name, player_two
 end
 
 Given(/^"([^"]*)"'s marker is "([^"]*)"$/) do |name, marker|
-  @game.find_player_by_name(name).marker = marker
-  @game.find_player_by_name(name).solutions_calculator = SolutionsCalculator.new(
-    grid:   @game.find_player_by_name(name).grid,
-    marker: @game.find_player_by_name(name).marker,
+  player = @game.find_player_by_name(name)
+  player.marker = marker
+  player.solutions_calculator = SolutionsCalculator.new(
+    grid:   player.grid,
+    marker: player.marker,
   )
 end
 
 Given(/^the grid looks like this:$/) do |table|
-  @game.make_move(:A1)
-  @game.make_move(:B2)
-  @game.make_move(:A2)
-  @game.make_move(:C2)
+  coordinates = [:A1, :B2, :A2, :C2]
+  coordinates.each { |at_coordinate| @game.make_move(at_coordinate)  }
 end
 
 Given(/^now the grid looks like this:$/) do |table|
-  @game.make_move(:A1)
-  @game.make_move(:B1)
-  @game.make_move(:C1)
-  @game.make_move(:B2)
-  @game.make_move(:A2)
-  @game.make_move(:A3)
-  @game.make_move(:B3)
-  @game.make_move(:C2)
+  coordinates = [:A1, :B1, :C1, :B2, :A2, :A3, :B3, :C2]
+  coordinates.each { |at_coordinate| @game.make_move(at_coordinate)  }
 end
 
 When(/^"([^"]*)" places his marker at "([^"]*)"$/) do |name, coordinate|

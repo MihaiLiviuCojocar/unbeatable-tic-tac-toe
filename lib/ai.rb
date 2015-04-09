@@ -1,16 +1,39 @@
 require_relative 'player'
 
 class Ai < Player
+  COUNTERS = {"first" => 0, "second" => 1, "third" => 2}
+
   def initialize(opt = {})
     super(name: 'Computer', grid: opt[:grid])
   end
 
   def ask_for_recommendation
-    case moves_count
-      when 0 then solutions_calculator.first_move_recommendation
-      when 1 then solutions_calculator.second_move_recommendation
-      when 2 then solutions_calculator.third_move_recommendation
-      else solutions_calculator.recommendation
-    end
+      return solutions_calculator.first_move_recommendation if first_move?
+      return solutions_calculator.second_move_recommendation if second_move?
+      return solutions_calculator.third_move_recommendation if third_move?
+      solutions_calculator.recommendation
+  end
+
+  private
+
+  # def first_move?
+  #   at_current_move?(0)
+  # end
+  #
+  # def second_move?
+  #   at_current_move?(1)
+  # end
+  #
+  # def third_move?
+  #   at_current_move?(2)
+  # end
+
+  def method_missing(name)
+    return at_current_move?(COUNTERS[$1]) if name =~ /(.+?)_move?/
+    super
+  end
+
+  def at_current_move?(move)
+    moves_count == move
   end
 end
