@@ -45,9 +45,14 @@ class SolutionsCalculator
     winning_solutions.sample
   end
 
+  def nobody_moved_yet?
+    grid.coordinates.all? { |coord| !grid.matrix[coord].has_content? }
+  end
+
   def first_move_recommendation
-    return reccomend_corner_in_proximity_of(find_which_middle_line) if enemy_took_middle_line?
-    recommend_middle or recommend_a_corner
+    return recommend_a_corner if nobody_moved_yet?
+    return recommend_corner_in_proximity_of(find_which_middle_line) if enemy_took_middle_line?
+    recommend_middle
   end
 
   def second_move_recommendation
@@ -120,7 +125,7 @@ class SolutionsCalculator
     grid.available_cells_coordinates.sample
   end
 
-  def reccomend_corner_in_proximity_of(coord)
+  def recommend_corner_in_proximity_of(coord)
     MIDDLE_LINES_CELLS[coord].sample
   end
 

@@ -45,3 +45,6 @@
 <% end %>
 
 <a href="/reset" name="reset">Reset</a>
+<% if @game.player_two.is_a?(Ai) %>
+  <a href="/mark_second" name="switch">Let computer pick first</a>
+<% end %>

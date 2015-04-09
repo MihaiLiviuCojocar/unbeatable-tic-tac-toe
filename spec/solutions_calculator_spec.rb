@@ -93,23 +93,25 @@ describe SolutionsCalculator do
 
   context 'making recomandations for' do
     context 'first move' do
-      context 'when the middle is free' do
-        it 'recommends the middle' do
-          allow(solutions_calculator).to receive(:enemy_took_middle_line?).and_return(false)
-          allow(grid).to receive(:has_middle_free?).and_return(true)
-          allow(grid).to receive(:middle_coordinate).and_return(:B2)
+      context 'when nobody has moved yet' do
+        it 'recommends a corner' do
+          allow(solutions_calculator).to receive(:nobody_moved_yet?).and_return(true)
+          allow(grid).to receive(:corner_coordinates).and_return([:A1])
+          allow(grid).to receive(:available_cells_coordinates).and_return([:A1])
 
-          expect(solutions_calculator.first_move_recommendation).to eq(:B2)
+          expect(solutions_calculator.first_move_recommendation).to eq(:A1)
         end
       end
 
       context 'when the middle is not free' do
-        it 'recommends a corner' do
+        it 'recommends a corner if the middle has been taken' do
+          allow(solutions_calculator).to receive(:nobody_moved_yet?).and_return(false)
           allow(solutions_calculator).to receive(:enemy_took_middle_line?).and_return(true)
           allow(solutions_calculator).to receive(:find_which_middle_line).and_return(:A2)
-          allow(solutions_calculator).to receive(:reccomend_corner_in_proximity_of).and_return(:A1)
 
-          expect(solutions_calculator.first_move_recommendation).to eq(:A1)
+          recommendation   = solutions_calculator.first_move_recommendation
+          closests_corners =  [:A1, :A3]
+          expect(closests_corners.include?(recommendation)).to be true
         end
       end
     end

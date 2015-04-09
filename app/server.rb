@@ -45,7 +45,7 @@ class TicTacToe < Sinatra::Base
     coordinate = (params[:letter] + params[:number]).to_sym
     begin
       game.make_move(coordinate)
-      game.make_move(game.current_player.ask_for_recommendation) if game.player_two.is_a?(Ai)
+      game.make_move(game.current_player.ask_for_recommendation) if game.current_player.is_a?(Ai)
     rescue GameOverError => e
       flash[:notice] = e.message
     rescue DrawGameError => e
@@ -73,6 +73,12 @@ class TicTacToe < Sinatra::Base
     ai.marker = :O
     ai.solutions_calculator = SolutionsCalculator.new(grid: grid, marker: ai.marker)
     redirect '/play'
+  end
+
+  get '/mark_second' do
+    game.switch_turns
+    game.make_move(game.current_player.ask_for_recommendation)
+    redirect 'play'
   end
 
   # start the server if ruby file executed directly
