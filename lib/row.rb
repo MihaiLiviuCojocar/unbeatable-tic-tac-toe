@@ -1,6 +1,7 @@
 class Row
-  EMPTY_CELLS = Proc.new { |cell| cell.content.nil? }
-  ONE_CELL    = 1
+  EMPTY_CELLS  = Proc.new { |cell| cell.content.nil? }
+  CELL_CONTENT = Proc.new { |cell| cell.content }
+  ONE_CELL     = 1
 
   attr_reader :cells, :marker
 
@@ -25,9 +26,29 @@ class Row
     empty_cell if has_an_opportunity_to_win?
   end
 
+  def has_to_defend?
+    has_one_available_cell_for_marking? and has_only_two_enemy_markers?
+  end
+
+  def has_only_two_enemy_markers?
+    has_only_enemy_marker? and has_only_one_type_of_marker?
+  end
+
+  def defending_cell
+    empty_cell if has_to_defend?
+  end
+
   private
 
   def empty_cell
     cells.select(&EMPTY_CELLS).first
+  end
+
+  def has_only_enemy_marker?
+    cells.map(&CELL_CONTENT).compact.uniq.first != marker
+  end
+
+  def has_only_one_type_of_marker?
+    cells.map(&CELL_CONTENT).compact.uniq.count == 1
   end
 end
