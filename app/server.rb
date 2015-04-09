@@ -78,7 +78,7 @@ class TicTacToe < Sinatra::Base
   get '/mark_second' do
     game.switch_turns
     game.make_move(game.current_player.ask_for_recommendation)
-    redirect 'play'
+    redirect '/play'
   end
 
   # start the server if ruby file executed directly

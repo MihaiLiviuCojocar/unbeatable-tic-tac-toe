@@ -50,9 +50,13 @@ class SolutionsCalculator
   end
 
   def first_move_recommendation
-    return recommend_a_corner if nobody_moved_yet?
+    return recommend_a_corner if nobody_moved_yet? or enemy_marked_middle?
     return recommend_corner_in_proximity_of(find_which_middle_line) if enemy_took_middle_line?
     recommend_middle
+  end
+
+  def enemy_marked_middle?
+    !grid.has_middle_free?
   end
 
   def second_move_recommendation
@@ -106,7 +110,7 @@ class SolutionsCalculator
   end
 
   def recommend_middle
-    grid.middle_coordinate if grid.has_middle_free?
+    grid.middle_coordinate
   end
 
   def recommend_the_middle_of_a_line
