@@ -97,21 +97,48 @@ describe SolutionsCalculator do
         it 'recommends a corner' do
           allow(solutions_calculator).to receive(:nobody_moved_yet?).and_return(true)
           allow(grid).to receive(:corner_coordinates).and_return([:A1])
+          allow(grid).to receive(:has_middle_free?).and_return(true)
           allow(grid).to receive(:available_cells_coordinates).and_return([:A1])
 
           expect(solutions_calculator.first_move_recommendation).to eq(:A1)
         end
       end
 
-      context 'when the middle is not free' do
-        it 'recommends a corner if the middle has been taken' do
+      context 'when is moving second' do
+        before do
           allow(solutions_calculator).to receive(:nobody_moved_yet?).and_return(false)
-          allow(solutions_calculator).to receive(:enemy_took_middle_line?).and_return(true)
-          allow(solutions_calculator).to receive(:find_which_middle_line).and_return(:A2)
+          allow(grid).to receive(:available_cells_coordinates).and_return([:A1, :A3, :C1, :C3, :B2])
+          allow(grid).to receive(:middle_coordinate).and_return(:B2)
+        end
 
-          recommendation   = solutions_calculator.first_move_recommendation
-          closests_corners =  [:A1, :A3]
-          expect(closests_corners.include?(recommendation)).to be true
+        context 'and the enemy marked the middle' do
+          it 'recommends a corner' do
+            allow(solutions_calculator).to receive(:enemy_marked_middle?).and_return(true)
+            allow(grid).to receive(:corner_coordinates).and_return([:A1, :A3, :C1, :C3])
+
+            recommendation = solutions_calculator.first_move_recommendation
+            corners = grid.corner_coordinates
+            expect(corners.include?(recommendation)).to be true
+          end
+
+          context 'and the middle is free' do
+            it 'recommends the middle' do
+              allow(solutions_calculator).to receive(:enemy_marked_middle?).and_return(false)
+              allow(solutions_calculator).to receive(:enemy_took_middle_line?).and_return(false)
+
+              expect(solutions_calculator.first_move_recommendation).to eq(:B2)
+            end
+          end
+
+          it 'recommends a corner in proximity of enemy marker if the enemy marked the middle of a line' do
+            allow(grid).to receive(:has_middle_free?).and_return(true)
+            allow(solutions_calculator).to receive(:enemy_took_middle_line?).and_return(true)
+            allow(solutions_calculator).to receive(:find_which_middle_line).and_return(:A2)
+
+            recommendation   = solutions_calculator.first_move_recommendation
+            closests_corners =  [:A1, :A3]
+            expect(closests_corners.include?(recommendation)).to be true
+          end
         end
       end
     end
