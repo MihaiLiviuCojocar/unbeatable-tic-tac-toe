@@ -1,8 +1,6 @@
 require_relative 'player'
 
 class Ai < Player
-  COUNTERS = {"first" => 0, "second" => 1, "third" => 2}
-
   def initialize(opt = {})
     super(name: 'Computer', grid: opt[:grid])
   end
@@ -16,21 +14,16 @@ class Ai < Player
 
   private
 
-  # def first_move?
-  #   at_current_move?(0)
-  # end
-  #
-  # def second_move?
-  #   at_current_move?(1)
-  # end
-  #
-  # def third_move?
-  #   at_current_move?(2)
-  # end
+  def first_move?
+    at_current_move?(0)
+  end
 
-  def method_missing(name)
-    return at_current_move?(COUNTERS[$1]) if name =~ /(.+?)_move?/
-    super
+  def second_move?
+    at_current_move?(1)
+  end
+
+  def third_move?
+    at_current_move?(2)
   end
 
   def at_current_move?(move)
