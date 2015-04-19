@@ -2,7 +2,7 @@ describe SolutionsCalculator do
   let(:grid)                 { double :grid                                       }
   let(:row_class)            { double :row_class                                  }
   let(:marker)               { :cross                                             }
-  let(:solutions_calculator) { SolutionsCalculator.new grid: grid, marker: marker }
+  let(:solutions_calculator) { SolutionsCalculator.new(grid: grid, marker: marker).extend(Recommendation) }
 
   context 'providing solutions' do
     it 'has a list of coordinates of all possible winning combinations' do
