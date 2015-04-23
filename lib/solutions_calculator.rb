@@ -1,5 +1,5 @@
 class SolutionsCalculator
-  attr_reader :grid, :marker
+  attr_reader :game, :marker
 
   POSSIBLE_COMBINATIONS = [
     [:A1, :B1, :C1],
@@ -13,8 +13,12 @@ class SolutionsCalculator
   ]
 
   def initialize(options = {})
-    @grid   = options[:grid]
+    @game   = options[:game]
     @marker = options[:marker]
+  end
+
+  def grid
+    game.grid
   end
 
   def possible_combinations

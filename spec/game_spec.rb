@@ -1,6 +1,6 @@
 describe Game do
-  let(:game)       { Game.new                                      }
-  let(:game_ready) { Game.new                                      }
+  let(:game)       { Game.new(grid: :grid)                         }
+  let(:game_ready) { Game.new(grid: :grid)                         }
   let(:player_one) { double :player, winner?: false, name: 'Mihai' }
   let(:player_two) { double :player, winner?: false, name: 'Roi'   }
 

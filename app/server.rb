@@ -7,9 +7,9 @@ class TicTacToe < Sinatra::Base
   enable :sessions
   register Sinatra::Flash
 
-  game = Game.new
   grid = Grid.new(size: 3)
   grid.set_content_with(Cell)
+  game = Game.new(grid: grid)
 
   get '/' do
     erb :index
@@ -19,7 +19,7 @@ class TicTacToe < Sinatra::Base
     @name         = params[:player_name]
     player        = Player.new(name: @name, grid: grid)
     player.marker = :X
-    player.solutions_calculator = SolutionsCalculator.new(grid: grid, marker: :X)
+    player.solutions_calculator = SolutionsCalculator.new(game: game, marker: :X)
     game.add_player(player)
     erb :choose_game
   end
@@ -31,7 +31,7 @@ class TicTacToe < Sinatra::Base
   post '/fight' do
     player        = Player.new(name: params[:second_player_name], grid: grid)
     player.marker = :O
-    player.solutions_calculator = SolutionsCalculator.new(grid: grid, marker: :O)
+    player.solutions_calculator = SolutionsCalculator.new(game: game, marker: :O)
     game.add_player(player)
     redirect '/play'
   end
@@ -63,7 +63,7 @@ class TicTacToe < Sinatra::Base
   get '/reset' do
     grid.clear!
     grid.set_content_with(Cell)
-    game = Game.new
+    game = Game.new(grid: grid)
     erb :index
   end
 
@@ -71,7 +71,7 @@ class TicTacToe < Sinatra::Base
     ai = Ai.new(grid: grid)
     game.add_player(ai)
     ai.marker = :O
-    ai.solutions_calculator = SolutionsCalculator.new(grid: grid, marker: ai.marker)
+    ai.solutions_calculator = SolutionsCalculator.new(game: game, marker: ai.marker)
     redirect '/play'
   end
 

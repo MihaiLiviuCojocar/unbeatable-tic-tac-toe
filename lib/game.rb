@@ -4,7 +4,11 @@ class Game
   MAX_NUMBER_OF_MOVES = 9
   WINNER              = Proc.new{ |player| player.winner? }
 
-  attr_reader :player_one, :player_two
+  attr_reader :player_one, :player_two, :grid
+
+  def initialize(opt = {})
+    @grid = opt.fetch(:grid)
+  end
 
   def has_two_players?
     has_player_one? and has_player_two?

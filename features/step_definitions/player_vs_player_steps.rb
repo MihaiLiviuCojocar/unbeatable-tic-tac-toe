@@ -13,7 +13,7 @@ Given(/^"([^"]*)"'s marker is "([^"]*)"$/) do |name, marker|
   player = @game.find_player_by_name(name)
   player.marker = marker
   player.solutions_calculator = SolutionsCalculator.new(
-    grid:   player.grid,
+    game:   @game,
     marker: player.marker,
   )
 end
