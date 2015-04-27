@@ -36,13 +36,13 @@ class Game
   end
 
   def switch_turns
-    raise GameOverError.new(winner.name) if over?
+    raise GameOverError.new(winner.name) if has_winner?
     raise DrawGameError if draw?
     @current_player = current_player == @player_one ? @player_two : @player_one
   end
 
   def over?
-     has_two_players? and has_winner?
+     (has_two_players? and has_winner?) or draw?
   end
 
   def winner
@@ -56,6 +56,14 @@ class Game
   def make_move(at_coordinate)
     current_player.place_marker(at_coordinate)
     switch_turns
+  end
+
+  def has_winner?
+    !winner.nil?
+  end
+
+  def available_moves
+    grid.available_cells_coordinates
   end
 
   private
@@ -72,12 +80,13 @@ class Game
     [player_one, player_two]
   end
 
-  def has_winner?
-    !winner.nil?
+  def all_moves_done?
+    # player_one.moves_count + player_two.moves_count == MAX_NUMBER_OF_MOVES
+    available_moves_count == 0
   end
 
-  def all_moves_done?
-    player_one.moves_count + player_two.moves_count == MAX_NUMBER_OF_MOVES
+  def available_moves_count
+    available_moves.count
   end
 
   def draw?

@@ -71,7 +71,10 @@ class TicTacToe < Sinatra::Base
     ai = Ai.new(grid: grid)
     game.add_player(ai)
     ai.marker = :O
-    ai.solutions_calculator = SolutionsCalculator.new(game: game, marker: ai.marker)
+    ai.solutions_calculator = SolutionsCalculator.new(
+      game: game,
+      marker: ai.marker
+    ).extend(MinimaxRecommendation)
     redirect '/play'
   end
 
