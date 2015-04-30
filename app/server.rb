@@ -19,19 +19,25 @@ class TicTacToe < Sinatra::Base
     @name         = params[:player_name]
     player        = Player.new(name: @name, grid: grid)
     player.marker = :X
-    player.solutions_calculator = SolutionsCalculator.new(game: game, marker: :X)
+    player.solutions_calculator = SolutionsCalculator.new(
+      game: game,
+      marker: player.marker
+    )
     game.add_player(player)
     erb :choose_game
   end
 
-  get '/play_vs_human' do
+  get '/play/human' do
     erb :second_player
   end
 
   post '/fight' do
     player        = Player.new(name: params[:second_player_name], grid: grid)
     player.marker = :O
-    player.solutions_calculator = SolutionsCalculator.new(game: game, marker: :O)
+    player.solutions_calculator = SolutionsCalculator.new(
+      game: game,
+      marker: player.marker
+    )
     game.add_player(player)
     redirect '/play'
   end
@@ -45,7 +51,12 @@ class TicTacToe < Sinatra::Base
     coordinate = (params[:letter] + params[:number]).to_sym
     begin
       game.make_move(coordinate)
-      game.make_move(game.current_player.ask_for_minimax_recommendation) if game.current_player.is_a?(Ai)
+      if game.current_player.is_a?(Ai) and game.current_player.solutions_calculator.respond_to?(:recommendation)
+        game.make_move(game.current_player.ask_for_rule_based_recommendation)
+      end
+      if game.current_player.is_a?(Ai) and game.current_player.solutions_calculator.respond_to?(:minimax_recommendation)
+        game.make_move(game.current_player.ask_for_minimax_recommendation)
+      end
     rescue GameOverError => e
       flash[:notice] = e.message
     rescue DrawGameError => e
@@ -67,7 +78,7 @@ class TicTacToe < Sinatra::Base
     erb :index
   end
 
-  get '/play_vs_computer' do
+  get '/play/computer/minimax' do
     ai = Ai.new(grid: grid)
     game.add_player(ai)
     ai.marker = :O
@@ -77,7 +88,18 @@ class TicTacToe < Sinatra::Base
     ).extend(MinimaxRecommendation)
     redirect '/play'
   end
-  
+
+  get '/play/computer/rule_based' do
+    ai = Ai.new(grid: grid)
+    game.add_player(ai)
+    ai.marker = :O
+    ai.solutions_calculator = SolutionsCalculator.new(
+      game: game,
+      marker: ai.marker
+    ).extend(Recommendation)
+    redirect '/play'
+  end
+
   # start the server if ruby file executed directly
   run! if app_file == $0
 end

@@ -13,7 +13,7 @@ class Ai < Player
   end
 
   def ask_for_minimax_recommendation
-    solutions_calculator.recommendation
+    solutions_calculator.minimax_recommendation
   end
 
   private

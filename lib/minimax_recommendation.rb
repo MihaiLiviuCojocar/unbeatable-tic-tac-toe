@@ -5,7 +5,7 @@ module MinimaxRecommendation
     0
   end
 
-  def recommendation
+  def minimax_recommendation
     minimax(game)
     return best_move
   end
