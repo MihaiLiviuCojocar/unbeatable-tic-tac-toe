@@ -6,22 +6,10 @@ module Recommendation
     C2: [:C1, :C3]
   }
   
-  def recommend_winning_solution
-    winning_solutions.sample
-  end
-
-  def nobody_moved_yet?
-    grid.coordinates.all? { |coord| !grid.matrix[coord].has_content? }
-  end
-
   def first_move_recommendation
     return recommend_a_corner if nobody_moved_yet? or enemy_marked_middle?
     return recommend_corner_in_proximity_of(find_which_middle_line) if enemy_took_middle_line?
     recommend_middle
-  end
-
-  def enemy_marked_middle?
-    !grid.has_middle_free?
   end
 
   def second_move_recommendation
@@ -52,6 +40,20 @@ module Recommendation
     winning_solutions.any?
   end
 
+  def recommend_winning_solution
+    winning_solutions.sample
+  end
+
+  private
+
+  def nobody_moved_yet?
+    grid.coordinates.all? { |coord| !grid.matrix[coord].has_content? }
+  end
+  
+  def enemy_marked_middle?
+    !grid.has_middle_free?
+  end
+
   def any_middle_line_cell_free?
     grid.middle_line_coordinates.any? { |coord| !grid.matrix[coord].has_content? }
   end
@@ -60,7 +62,7 @@ module Recommendation
     grid.get_content(grid.middle_coordinate).content == marker
   end
 
-   def recommend_a_corner
+  def recommend_a_corner
     coord = grid.corner_coordinates.sample
     until grid.available_cells_coordinates.include?(coord) do
       coord = grid.corner_coordinates.sample
