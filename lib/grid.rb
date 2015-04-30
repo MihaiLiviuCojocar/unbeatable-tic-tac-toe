@@ -43,7 +43,7 @@ class Grid
   end
 
   def clear!
-    @matrix = matrix_builder(size)
+    @matrix = build_matrix(size)
   end
 
   def has_middle_free?

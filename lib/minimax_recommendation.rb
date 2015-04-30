@@ -1,10 +1,10 @@
 module MinimaxRecommendation
   def final_state_score(game_state)
-    return 10 if game_state.has_winner? and i_am_winner?(game_state)
-    return -10 if game_state.has_winner? and !i_am_winner?(game_state)
+    return 1 if game_state.has_winner? and i_am_winner?(game_state)
+    return -1 if game_state.has_winner? and !i_am_winner?(game_state)
     0
   end
-  
+
   def recommendation
     minimax(game)
     best_move

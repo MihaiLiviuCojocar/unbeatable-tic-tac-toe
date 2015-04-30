@@ -1,8 +1,7 @@
 require_relative 'exceptions'
 
 class Game
-  MAX_NUMBER_OF_MOVES = 9
-  WINNER              = Proc.new{ |player| player.winner? }
+  WINNER = Proc.new{ |player| player.winner? }
 
   attr_reader :player_one, :player_two, :grid
   attr_writer :grid

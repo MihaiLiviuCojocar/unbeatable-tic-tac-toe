@@ -16,7 +16,7 @@ describe 'Minimax algorithm' do
         marker: marker
       ).extend(MinimaxRecommendation)
 
-      expect(solutions_calculator.final_state_score(game)).to eq 10
+      expect(solutions_calculator.final_state_score(game)).to eq 1
     end
 
     it 'scores with -1 a loss' do
@@ -25,12 +25,12 @@ describe 'Minimax algorithm' do
         marker: another_marker
       ).extend(MinimaxRecommendation)
 
-      expect(solutions_calculator.final_state_score(game)).to eq -10
+      expect(solutions_calculator.final_state_score(game)).to eq -1
     end
 
     it 'scores with 0 a draw' do
       allow(game).to receive(:has_winner?).and_return(false)
-      
+
       solutions_calculator = SolutionsCalculator.new(
         game:   game,
         marker: another_marker
