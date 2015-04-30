@@ -89,12 +89,10 @@ class Game
   end
 
   def all_moves_done?
-    # player_one.moves_count + player_two.moves_count == MAX_NUMBER_OF_MOVES
     available_moves_count == 0
   end
 
   def available_moves_count
     available_moves.count
   end
-
 end
