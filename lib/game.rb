@@ -1,10 +1,14 @@
 require_relative 'exceptions'
 
 class Game
-  MAX_NUMBER_OF_MOVES = 9
-  WINNER              = Proc.new{ |player| player.winner? }
+  WINNER = Proc.new{ |player| player.winner? }
 
-  attr_reader :player_one, :player_two
+  attr_reader :player_one, :player_two, :grid
+  attr_writer :grid
+
+  def initialize(opt = {})
+    @grid = opt.fetch(:grid)
+  end
 
   def has_two_players?
     has_player_one? and has_player_two?
@@ -32,13 +36,13 @@ class Game
   end
 
   def switch_turns
-    raise GameOverError.new(winner.name) if over?
+    raise GameOverError.new(winner.name) if has_winner?
     raise DrawGameError if draw?
     @current_player = current_player == @player_one ? @player_two : @player_one
   end
 
   def over?
-     has_two_players? and has_winner?
+     (has_two_players? and has_winner?) or draw?
   end
 
   def winner
@@ -54,6 +58,22 @@ class Game
     switch_turns
   end
 
+  def has_winner?
+    !winner.nil? and has_two_players?
+  end
+
+  def available_moves
+    grid.available_cells_coordinates
+  end
+
+  def final_move?
+    available_moves_count == 1
+  end
+
+  def draw?
+     all_moves_done? and !has_winner?
+  end
+  
   private
 
   def add_player_one(player)
@@ -68,15 +88,11 @@ class Game
     [player_one, player_two]
   end
 
-  def has_winner?
-    !winner.nil?
-  end
-
   def all_moves_done?
-    player_one.moves_count + player_two.moves_count == MAX_NUMBER_OF_MOVES
+    available_moves_count == 0
   end
 
-  def draw?
-     all_moves_done? and !has_winner?
+  def available_moves_count
+    available_moves.count
   end
 end

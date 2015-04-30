@@ -21,5 +21,5 @@ World do
 end
 
 Around('@AndIwillwalk500miles') do |scenario, block|
-  500.times { block.call }
+  # 500.times { block.call }
 end

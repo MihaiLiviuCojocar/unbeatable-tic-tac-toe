@@ -1,38 +1,38 @@
 require 'sinatra/base'
 require 'sinatra/flash'
+require_relative './helpers/application_helpers'
 require_relative '../loader'
 
 class TicTacToe < Sinatra::Base
+  include ApplicationHelpers
 
   enable :sessions
   register Sinatra::Flash
 
-  game = Game.new
   grid = Grid.new(size: 3)
   grid.set_content_with(Cell)
+  game = Game.new(grid: grid)
 
   get '/' do
     erb :index
   end
 
   post '/register' do
-    @name         = params[:player_name]
-    player        = Player.new(name: @name, grid: grid)
-    player.marker = :X
-    player.solutions_calculator = SolutionsCalculator.new(grid: grid, marker: :X)
+    @name  = params[:player_name]
+    player = Player.new(name: @name, grid: grid)
     game.add_player(player)
+    prepare_player(player, game)
     erb :choose_game
   end
 
-  get '/play_vs_human' do
+  get '/play/human' do
     erb :second_player
   end
 
   post '/fight' do
-    player        = Player.new(name: params[:second_player_name], grid: grid)
-    player.marker = :O
-    player.solutions_calculator = SolutionsCalculator.new(grid: grid, marker: :O)
+    player = Player.new(name: params[:second_player_name], grid: grid)
     game.add_player(player)
+    prepare_player(player, game)
     redirect '/play'
   end
 
@@ -45,7 +45,7 @@ class TicTacToe < Sinatra::Base
     coordinate = (params[:letter] + params[:number]).to_sym
     begin
       game.make_move(coordinate)
-      game.make_move(game.current_player.ask_for_recommendation) if game.current_player.is_a?(Ai)
+      computer_makes_his_move(game)
     rescue GameOverError => e
       flash[:notice] = e.message
     rescue DrawGameError => e
@@ -63,21 +63,21 @@ class TicTacToe < Sinatra::Base
   get '/reset' do
     grid.clear!
     grid.set_content_with(Cell)
-    game = Game.new
+    game = Game.new(grid: grid)
     erb :index
   end
 
-  get '/play_vs_computer' do
+  get '/play/computer/minimax' do
     ai = Ai.new(grid: grid)
     game.add_player(ai)
-    ai.marker = :O
-    ai.solutions_calculator = SolutionsCalculator.new(grid: grid, marker: ai.marker)
+    prepare_minimax_ai(ai, game)
     redirect '/play'
   end
 
-  get '/mark_second' do
-    game.switch_turns
-    game.make_move(game.current_player.ask_for_recommendation)
+  get '/play/computer/rule_based' do
+    ai = Ai.new(grid: grid)
+    game.add_player(ai)
+    prepare_rule_based_ai(ai, game)
     redirect '/play'
   end
 
