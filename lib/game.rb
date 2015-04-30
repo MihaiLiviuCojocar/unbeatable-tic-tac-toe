@@ -5,6 +5,7 @@ class Game
   WINNER              = Proc.new{ |player| player.winner? }
 
   attr_reader :player_one, :player_two, :grid
+  attr_writer :grid
 
   def initialize(opt = {})
     @grid = opt.fetch(:grid)
@@ -66,6 +67,13 @@ class Game
     grid.available_cells_coordinates
   end
 
+  def final_move?
+    available_moves_count == 1
+  end
+
+  def draw?
+     all_moves_done? and !has_winner?
+  end
   private
 
   def add_player_one(player)
@@ -89,7 +97,4 @@ class Game
     available_moves.count
   end
 
-  def draw?
-     all_moves_done? and !has_winner?
-  end
 end

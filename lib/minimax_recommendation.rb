@@ -1,7 +1,7 @@
 module MinimaxRecommendation
-  def score(game_state, depth)
+  def final_state_score(game_state, depth)
     return 10 - depth if game_state.has_winner? and i_am_winner?(game_state)
-    return -10 - depth if game_state.has_winner? and !i_am_winner?(game_state)
+    return depth - 10 if game_state.has_winner? and !i_am_winner?(game_state)
     0
   end
 
@@ -9,46 +9,47 @@ module MinimaxRecommendation
     game_state.winner.marker == marker
   end
 
-  def maximizing_player
-    winning_solutions.any?
-  end
-
-  def scores
-    @scores ||= []
-  end
-
-  def moves
-    @moves ||= []
-  end
-
-  def minimax(game_state, depth)
-    return score(game_state, depth) if game_state.over?
-
-    depth += 1
-
-    interm_moves = []
+  def intermediate_state_score(game_state, depth)
+    return final_state_score(game_state, depth) if game_state.over?
+    score ||= 0
     game_state.available_moves.each do |move|
       possible_game = Marshal.load(Marshal.dump(game_state))
       begin
         possible_game.make_move(move)
-      rescue GameOverError => e
-      rescue DrawGameError => e
+      rescue GameOverError
+      rescue DrawGameError
       end
-      scores << minimax(possible_game, depth)
-      interm_moves << move
-      scores.compact!
+      score += intermediate_state_score(possible_game, depth + 1)
     end
-    moves << interm_moves
-    moves.reverse!
-    nil
+    return score
+  end
+
+  def minimax(game_state, depth, maximizing_player)
+    return winning_solutions.first if maximizing_player
+    available_moves = {}
+    game_state.available_moves.each do |move|
+      possible_game = Marshal.load(Marshal.dump(game_state))
+      begin
+        possible_game.make_move(move)
+      rescue GameOverError
+      rescue DrawGameError
+      end
+      available_moves[move] = intermediate_state_score(possible_game, depth + 1)
+    end
+    p '+++' * 20
+    p available_moves
+    max_score = available_moves.values.max
+    best_move = available_moves.key(max_score)
+    return best_move
   end
 
   def best_move
-    max_score_index = scores.index(scores.max)
-    moves[max_score_index].first
+    @best_move
   end
 
   def recommendation
-    minimax(game, 0)
+    # p '===' * 20
+    # p winning_solutions
+    minimax(game, 0, winning_solutions.any?)
   end
 end
