@@ -6,20 +6,6 @@ describe SolutionsCalculator do
   let(:solutions_calculator) { SolutionsCalculator.new(game: game, marker: marker).extend(Recommendation) }
 
   context 'providing solutions' do
-    it 'has a list of coordinates of all possible winning combinations' do
-      expect(SolutionsCalculator::POSSIBLE_COMBINATIONS).to eq (
-        [
-          [:A1, :B1, :C1],
-          [:A2, :B2, :C2],
-          [:A3, :B3, :C3],
-          [:A1, :A2, :A3],
-          [:B1, :B2, :B3],
-          [:C1, :C2, :C3],
-          [:A1, :B2, :C3],
-          [:A3, :B2, :C1]
-        ])
-    end
-
     it 'needs a grid when initialized' do
       expect(solutions_calculator.grid).to eq grid
     end
