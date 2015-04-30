@@ -1,6 +1,7 @@
 describe Game do
-  let(:game)       { Game.new                                      }
-  let(:game_ready) { Game.new                                      }
+  let(:grid)       { double :grid                                  }
+  let(:game)       { Game.new(grid: grid)                          }
+  let(:game_ready) { Game.new(grid: grid)                          }
   let(:player_one) { double :player, winner?: false, name: 'Mihai' }
   let(:player_two) { double :player, winner?: false, name: 'Roi'   }
 
@@ -14,6 +15,7 @@ describe Game do
   end
 
   it 'is not over when created' do
+    allow(game).to receive(:available_moves_count).and_return(9)
     expect(game).not_to be_over
   end
 
@@ -23,14 +25,12 @@ describe Game do
 
   it 'can add the first player' do
     game.add_player(:player_one)
-
     expect(game).to have_player_one
   end
 
   it 'can add the second player' do
     game.add_player(:player_one)
     game.add_player(:player_two)
-
     expect(game).to have_player_two
   end
 
@@ -51,35 +51,28 @@ describe Game do
   end
 
   it 'can switch turns' do
-    allow(player_one).to receive(:moves_count).and_return(0)
-    allow(player_two).to receive(:moves_count).and_return(0)
-
+    allow(game_ready).to receive(:available_moves_count).and_return(9)
     game_ready.switch_turns
-
     expect(game_ready.current_player).to eq(player_two)
   end
 
   it 'knows that player one can be the winner' do
     allow(player_one).to receive(:winner?).and_return(true)
-
     expect(game_ready.winner).to eq(player_one)
   end
 
   it 'knwos that player two can be the winner' do
     allow(player_two).to receive(:winner?).and_return(true)
-
     expect(game_ready.winner).to eq(player_two)
   end
 
   it 'is over if there is a winner' do
     allow(player_two).to receive(:winner?).and_return(true)
-
     expect(game_ready).to be_over
   end
 
   it 'cannot switch turns if there is a winner' do
     allow(player_one).to receive(:winner?).and_return(true)
-
     expect{game_ready.switch_turns}.to raise_error('Game over! Mihai wins!')
   end
 
@@ -88,29 +81,21 @@ describe Game do
   end
 
   it 'makes a move for the current player' do
-    allow(player_one).to receive(:moves_count).and_return(0)
-    allow(player_two).to receive(:moves_count).and_return(0)
-
+    allow(game_ready).to receive(:available_moves_count).and_return(9)
     expect(player_one).to receive(:place_marker).with(:A1)
-
     game_ready.make_move(:A1)
   end
 
   it 'switches the turnes after making a move' do
-    allow(player_one).to receive(:moves_count).and_return(0)
-    allow(player_two).to receive(:moves_count).and_return(0)
+    allow(game_ready).to receive(:available_moves_count).and_return(9)
     allow(player_one).to receive(:place_marker).with(:A1)
-
     game_ready.make_move(:A1)
-
     expect(game_ready.current_player).to eq(player_two)
   end
 
   it 'knows that there is a draw if it makes the last move and there is no winner' do
-    allow(player_one).to receive(:moves_count).and_return(5)
-    allow(player_two).to receive(:moves_count).and_return(4)
+    allow(game_ready).to receive(:available_moves_count).and_return(0)
     allow(player_one).to receive(:place_marker).with(:A1)
-
     expect{ game_ready.make_move(:A1) }.to raise_error(DrawGameError, 'Draw! Nobody wins! :)')
   end
 end

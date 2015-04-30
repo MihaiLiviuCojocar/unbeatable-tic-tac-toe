@@ -6,11 +6,11 @@ end
 
 When(/^they play against eachother$/) do
   8.times do
-    coord = @game.current_player.ask_for_recommendation
+    coord = @game.current_player.ask_for_rule_based_recommendation
     @game.make_move(coord)
    end
 end
 
 Then(/^no one should win$/) do
-  expect{ @game.make_move(@game.current_player.ask_for_recommendation) }.to raise_error(DrawGameError)
+  expect{ @game.make_move(@game.current_player.ask_for_rule_based_recommendation) }.to raise_error(DrawGameError)
 end

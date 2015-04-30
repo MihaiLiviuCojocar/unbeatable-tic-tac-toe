@@ -1,6 +1,6 @@
 describe Ai do
-  let(:grid)                   { double :grid                 }
-  let(:ai)                     { Ai.new(grid: grid)           }
+  let(:grid) { double :grid       }
+  let(:ai)   { Ai.new(grid: grid) }
 
   it 'his name is "Computer"' do
     grid = double :grid

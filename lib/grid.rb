@@ -1,11 +1,15 @@
+require_relative 'matrix_builder'
+
 class Grid
+  include MatrixBuilder
+
   DEFAULT_SIZE = 1
 
   attr_reader :size
 
   def initialize(size: DEFAULT_SIZE)
     @size   = size
-    @matrix = matrix_builder(@size)
+    @matrix = build_matrix(@size)
   end
 
   def coordinates
@@ -39,7 +43,7 @@ class Grid
   end
 
   def clear!
-    @matrix = matrix_builder(size)
+    @matrix = build_matrix(size)
   end
 
   def has_middle_free?
@@ -65,18 +69,6 @@ class Grid
   end
 
   private
-
-  def matrix_builder(size)
-    [*'A'..equivalent_letter_for(size)].map do |letter|
-      [*1..size].map do |number|
-        { "#{letter}#{number}".to_sym => nil }
-      end
-    end.flatten.reduce(:merge)
-  end
-
-  def equivalent_letter_for(number)
-    (number + 64).chr
-  end
 
   def available_cells
     matrix.values.reject { |cell| cell.has_content? }
