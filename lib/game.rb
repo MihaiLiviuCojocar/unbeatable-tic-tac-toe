@@ -73,6 +73,7 @@ class Game
   def draw?
      all_moves_done? and !has_winner?
   end
+  
   private
 
   def add_player_one(player)

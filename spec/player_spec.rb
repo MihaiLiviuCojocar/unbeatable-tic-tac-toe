@@ -1,7 +1,7 @@
 describe Player do
-  let(:grid)                 { double :grid                               }
-  let(:solutions_calculator) { double :solutions_calculator               }
-  let(:player)               { Player.new(name: 'Mihai', grid: grid)      }
+  let(:grid)                 { double :grid                          }
+  let(:solutions_calculator) { double :solutions_calculator          }
+  let(:player)               { Player.new(name: 'Mihai', grid: grid) }
 
   context 'when created' do
     it 'has a name when created' do
@@ -40,33 +40,26 @@ describe Player do
 
     it 'can place his marker on the grid at a coordinate' do
       allow(solutions_calculator).to receive(:winning_solutions).and_return([])
-
       expect(grid).to receive(:place_marker).with(:A1, :zerro)
-
       player.place_marker(:A1)
     end
 
     it 'knows that he made one move after making one' do
       allow(solutions_calculator).to receive(:winning_solutions).and_return([])
       allow(grid).to receive(:place_marker).with(:A1, :zerro)
-
       player.place_marker(:A1)
-
       expect(player.moves_count).to eq(1)
     end
 
     it 'knwos the winning solutions' do
       expect(solutions_calculator).to receive(:winning_solutions)
-
       player.winning_solutions
     end
 
     it 'knows that he wins if he marks a coordinate which is a solution' do
       allow(solutions_calculator).to receive(:winning_solutions).and_return([:A3])
       allow(grid).to receive(:place_marker).with(:A3, :zerro)
-
       player.place_marker(:A3)
-
       expect(player).to be_winner
     end
   end

@@ -27,35 +27,29 @@ describe Grid do
 
   it 'can set the content at all coordinates' do
     expect(cell).to receive(:new).exactly(size * size).times
-
     grid.set_content_with(cell)
   end
 
   it 'can place a marker at a coordinate' do
     marker = :zerro
     grid.set_content(at_coordinate: coordinate, content: cell)
-
     expect(cell).to receive(:content=).with(marker)
-
     grid.place_marker(coordinate, marker)
   end
 
   it 'knows if the midlle is free' do
     allow(grid).to receive(:get_content).with(grid.middle_coordinate).and_return(empty_cell)
-
     expect(grid).to have_middle_free
   end
 
   it 'knows if the midlle is not free' do
     allow(grid).to receive(:get_content).with(grid.middle_coordinate).and_return(full_cell)
-
     expect(grid).not_to have_middle_free
   end
 
   it 'has a list of all available cells' do
     grid = Grid.new(size: 1)
     grid.set_content(content: empty_cell)
-
     expect(grid.available_cells_coordinates).to eq([:A1])
   end
 end

@@ -6,10 +6,10 @@ class Ai < Player
   end
 
   def ask_for_rule_based_recommendation
-      return solutions_calculator.first_move_recommendation if first_move?
-      return solutions_calculator.second_move_recommendation if second_move?
-      return solutions_calculator.third_move_recommendation if third_move?
-      solutions_calculator.recommendation
+    return solutions_calculator.first_move_recommendation if first_move?
+    return solutions_calculator.second_move_recommendation if second_move?
+    return solutions_calculator.third_move_recommendation if third_move?
+    solutions_calculator.recommendation
   end
 
   def ask_for_minimax_recommendation
