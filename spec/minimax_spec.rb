@@ -229,7 +229,7 @@ describe 'Minimax algorithm' do
       # B |   | X |   |
       # C |   | O | X |
 
-      moves = [:B2]
+      moves = [:B2, :A1, :C3, :C2]
       moves.each do |move|
         game.make_move(move)
       end

@@ -11,7 +11,7 @@ module MinimaxRecommendation
 
   def intermediate_state_score(game_state, depth)
     return final_state_score(game_state, depth) if game_state.over?
-    score ||= 0
+    score = 0
     game_state.available_moves.each do |move|
       possible_game = Marshal.load(Marshal.dump(game_state))
       begin
@@ -25,7 +25,6 @@ module MinimaxRecommendation
   end
 
   def minimax(game_state, depth, maximizing_player)
-    return winning_solutions.first if maximizing_player
     available_moves = {}
     game_state.available_moves.each do |move|
       possible_game = Marshal.load(Marshal.dump(game_state))
