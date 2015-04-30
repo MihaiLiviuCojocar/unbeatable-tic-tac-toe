@@ -4,7 +4,7 @@ This is a game of Tic Tac Toe. It can be played against another human or against
 
 The Computer will win if he has the opportunity and will NEVER lose! :)
 
-I build this version of the game without any research on any other existing methods.
+The Computer can use to make the best decision a rule based or the [minimax algorithm](https://en.wikipedia.org/wiki/Minimax).
 
 ## Installation
 `git clone git@github.com:MihaiLiviuCojocar/unbeatable-tic-tac-toe.git`
