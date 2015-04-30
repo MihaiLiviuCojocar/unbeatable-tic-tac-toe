@@ -7,7 +7,7 @@ module MinimaxRecommendation
 
   def recommendation
     minimax(game)
-    best_move
+    return best_move
   end
 
   private
@@ -18,24 +18,24 @@ module MinimaxRecommendation
     moves  = []
 
     game.available_moves.each do |move|
-        possible_game = Marshal.load(Marshal.dump(game))
-        begin
-          possible_game.make_move(move)
-        rescue GameOverError => e
-        rescue DrawGameError => e
-        end
-        scores << minimax(possible_game)
-        moves << move
+      possible_game = Marshal.load(Marshal.dump(game))
+      begin
+        possible_game.make_move(move)
+      rescue GameOverError => e
+      rescue DrawGameError => e
+      end
+      scores << minimax(possible_game)
+      moves << move
     end
 
     if i_am_current_player?(game)
-        max_score_index = scores.index(scores.max)
-        @best_move = moves[max_score_index]
-        return scores[max_score_index]
+      max_score_index = scores.index(scores.max)
+      @best_move = moves[max_score_index]
+      return scores[max_score_index]
     else
-        min_score_index = scores.index(scores.min)
-        @best_move = moves[min_score_index]
-        return scores[min_score_index]
+      min_score_index = scores.index(scores.min)
+      @best_move = moves[min_score_index]
+      return scores[min_score_index]
     end
   end
 
@@ -43,8 +43,8 @@ module MinimaxRecommendation
     @best_move
   end
 
-  def i_am_winner?(game_state)
-    game_state.winner.marker == marker
+  def i_am_winner?(game)
+    game.winner.marker == marker
   end
 
   def i_am_current_player?(game)
