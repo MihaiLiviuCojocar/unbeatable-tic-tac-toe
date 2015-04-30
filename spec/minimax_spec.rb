@@ -1,9 +1,16 @@
 describe 'Minimax algorithm' do
   context 'scoring a final game state' do
-    it 'scores with 10 a win' do
-      marker = :X
-      winner = double :player, marker: marker
-      game   = double :game,   winner: winner, has_winner?: true
+    let(:marker)         { :X                             }
+    let(:another_marker) { :O                             }
+    let(:winner)         { double :player, marker: marker }
+    let(:game)           { double :game                   }
+
+    before(:each) do
+      allow(game).to receive(:winner).and_return(winner)
+      allow(game).to receive(:has_winner?).and_return(true)
+    end
+
+    it 'scores with 1 a win' do
       solutions_calculator = SolutionsCalculator.new(
         game:   game,
         marker: marker
@@ -12,11 +19,7 @@ describe 'Minimax algorithm' do
       expect(solutions_calculator.final_state_score(game)).to eq 10
     end
 
-    it 'scores with -10 a loss' do
-      marker         = :X
-      another_marker = :O
-      winner         = double :player, marker: marker
-      game           = double :game,   winner: winner, has_winner?: true
+    it 'scores with -1 a loss' do
       solutions_calculator = SolutionsCalculator.new(
         game:   game,
         marker: another_marker
@@ -26,10 +29,8 @@ describe 'Minimax algorithm' do
     end
 
     it 'scores with 0 a draw' do
-      marker         = :X
-      another_marker = :O
-      winner         = double :player, marker:      marker
-      game           = double :game,   has_winner?: false
+      allow(game).to receive(:has_winner?).and_return(false)
+      
       solutions_calculator = SolutionsCalculator.new(
         game:   game,
         marker: another_marker
@@ -39,7 +40,7 @@ describe 'Minimax algorithm' do
     end
   end
 
-  context 'game tree' do
+  context 'for different game states' do
     let(:grid) { Grid.new(size: 3)                     }
     let(:game) { Game.new(grid: grid)                  }
     let(:p1)   { Player.new(name: 'Mihai', grid: grid) }

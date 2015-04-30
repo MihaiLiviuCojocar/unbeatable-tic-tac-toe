@@ -60,7 +60,7 @@ class Game
   end
 
   def has_winner?
-    !winner.nil?
+    !winner.nil? and has_two_players?
   end
 
   def available_moves

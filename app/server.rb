@@ -45,7 +45,7 @@ class TicTacToe < Sinatra::Base
     coordinate = (params[:letter] + params[:number]).to_sym
     begin
       game.make_move(coordinate)
-      game.make_move(game.current_player.ask_for_recommendation) if game.current_player.is_a?(Ai)
+      game.make_move(game.current_player.ask_for_minimax_recommendation) if game.current_player.is_a?(Ai)
     rescue GameOverError => e
       flash[:notice] = e.message
     rescue DrawGameError => e
@@ -77,13 +77,7 @@ class TicTacToe < Sinatra::Base
     ).extend(MinimaxRecommendation)
     redirect '/play'
   end
-
-  get '/mark_second' do
-    game.switch_turns
-    game.make_move(game.current_player.ask_for_recommendation)
-    redirect '/play'
-  end
-
+  
   # start the server if ruby file executed directly
   run! if app_file == $0
 end
