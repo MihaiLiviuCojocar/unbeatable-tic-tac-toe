@@ -9,7 +9,7 @@ describe 'Minimax algorithm' do
         marker: marker
       ).extend(MinimaxRecommendation)
 
-      expect(solutions_calculator.final_state_score(game, 0)).to eq 10
+      expect(solutions_calculator.final_state_score(game)).to eq 10
     end
 
     it 'scores with -10 a loss' do
@@ -22,7 +22,7 @@ describe 'Minimax algorithm' do
         marker: another_marker
       ).extend(MinimaxRecommendation)
 
-      expect(solutions_calculator.final_state_score(game, 0)).to eq -10
+      expect(solutions_calculator.final_state_score(game)).to eq -10
     end
 
     it 'scores with 0 a draw' do
@@ -35,7 +35,7 @@ describe 'Minimax algorithm' do
         marker: another_marker
       ).extend(MinimaxRecommendation)
 
-      expect(solutions_calculator.final_state_score(game, 0)).to eq 0
+      expect(solutions_calculator.final_state_score(game)).to eq 0
     end
   end
 
@@ -105,7 +105,6 @@ describe 'Minimax algorithm' do
       moves.each do |move|
         game.make_move(move)
       end
-      # p game.grid.matrix.values.map{|cell| cell.content}.each_slice(3).each{|r| p r}
       expect(p2.solutions_calculator.recommendation).to eq :C2
     end
 
@@ -169,8 +168,6 @@ describe 'Minimax algorithm' do
       moves.each do |move|
         game.make_move(move)
       end
-      p game.grid.matrix.values.map{|cell| cell.content}.each_slice(3).each{|r| p r}
-      p "this one moves next: #{game.current_player.marker}"
       expect(p2.solutions_calculator.recommendation).to eq :A3
     end
 
