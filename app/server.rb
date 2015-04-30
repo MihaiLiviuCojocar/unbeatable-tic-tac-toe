@@ -18,14 +18,10 @@ class TicTacToe < Sinatra::Base
   end
 
   post '/register' do
-    @name         = params[:player_name]
-    player        = Player.new(name: @name, grid: grid)
-    player.marker = :X
-    player.solutions_calculator = SolutionsCalculator.new(
-      game: game,
-      marker: player.marker
-    )
+    @name  = params[:player_name]
+    player = Player.new(name: @name, grid: grid)
     game.add_player(player)
+    prepare_player(player, game)
     erb :choose_game
   end
 
@@ -34,13 +30,9 @@ class TicTacToe < Sinatra::Base
   end
 
   post '/fight' do
-    player        = Player.new(name: params[:second_player_name], grid: grid)
-    player.marker = :O
-    player.solutions_calculator = SolutionsCalculator.new(
-      game: game,
-      marker: player.marker
-    )
+    player = Player.new(name: params[:second_player_name], grid: grid)
     game.add_player(player)
+    prepare_player(player, game)
     redirect '/play'
   end
 
@@ -78,22 +70,14 @@ class TicTacToe < Sinatra::Base
   get '/play/computer/minimax' do
     ai = Ai.new(grid: grid)
     game.add_player(ai)
-    ai.marker = :O
-    ai.solutions_calculator = SolutionsCalculator.new(
-      game: game,
-      marker: ai.marker
-    ).extend(MinimaxRecommendation)
+    prepare_minimax_ai(ai, game)
     redirect '/play'
   end
 
   get '/play/computer/rule_based' do
     ai = Ai.new(grid: grid)
     game.add_player(ai)
-    ai.marker = :O
-    ai.solutions_calculator = SolutionsCalculator.new(
-      game: game,
-      marker: ai.marker
-    ).extend(Recommendation)
+    prepare_rule_based_ai(ai, game)
     redirect '/play'
   end
 
