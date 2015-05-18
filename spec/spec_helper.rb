@@ -1,6 +1,6 @@
 require './loader'
 require 'rspec'
-require_relative 'test_helpers'
+require_relative './test_helpers/cucumber_helpers'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
