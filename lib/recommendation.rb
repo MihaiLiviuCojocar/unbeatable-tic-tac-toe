@@ -14,7 +14,7 @@ module Recommendation
 
   def second_move_recommendation
     return recommend_a_defending_solution if need_to_defend?
-    return recommend_middle if grid.has_middle_free?
+    return recommend_middle if middle_free?
     return recommend_the_middle_of_a_line if middle_is_mine?
     recommend_a_corner
   end
@@ -64,6 +64,10 @@ module Recommendation
 
   def nobody_moved_yet?
     grid.coordinates.all? { |coord| !grid.matrix[coord].has_content? }
+  end
+
+  def middle_free?
+    grid.has_middle_free?
   end
   
   def enemy_marked_middle?
