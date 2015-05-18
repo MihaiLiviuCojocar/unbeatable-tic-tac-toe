@@ -1,8 +1,8 @@
 require_relative 'player'
 
 class Ai < Player
-  def initialize(opt = {})
-    super(name: 'Computer', grid: opt[:grid])
+  def initialize(options = {})
+    super(name: 'Computer', grid: options[:grid])
   end
 
   def ask_for_rule_based_recommendation

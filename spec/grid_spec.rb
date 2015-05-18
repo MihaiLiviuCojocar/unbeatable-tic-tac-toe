@@ -37,16 +37,6 @@ describe Grid do
     grid.place_marker(coordinate, marker)
   end
 
-  it 'knows if the midlle is free' do
-    allow(grid).to receive(:get_content).with(grid.middle_coordinate).and_return(empty_cell)
-    expect(grid).to have_middle_free
-  end
-
-  it 'knows if the midlle is not free' do
-    allow(grid).to receive(:get_content).with(grid.middle_coordinate).and_return(full_cell)
-    expect(grid).not_to have_middle_free
-  end
-
   it 'has a list of all available cells' do
     grid = Grid.new(size: 1)
     grid.set_content(content: empty_cell)

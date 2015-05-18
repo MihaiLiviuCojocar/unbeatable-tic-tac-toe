@@ -19,6 +19,7 @@ describe 'Minimax algorithm' do
     end
 
     it 'scores with -1 a loss' do
+      allow(game).to receive(:draw?).and_return(false)
       solutions_calculator = SolutionsCalculator.new(
         game:   game,
         marker: another_marker
@@ -27,6 +28,7 @@ describe 'Minimax algorithm' do
     end
 
     it 'scores with 0 a draw' do
+      allow(game).to receive(:draw?).and_return(true)
       allow(game).to receive(:has_winner?).and_return(false)
       solutions_calculator = SolutionsCalculator.new(
         game:   game,

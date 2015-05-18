@@ -3,8 +3,8 @@ class Player
   attr_accessor :marker, :solutions_calculator
 
   def initialize(options = {})
-    @name        = options.fetch(:name)
-    @grid        = options.fetch(:grid)
+    @name        = options[:name]
+    @grid        = options[:grid]
     @winner      = false
     @moves_count = 0
   end

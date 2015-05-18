@@ -1,6 +1,6 @@
 class GameFullError < Exception
   def to_s
-    'The game is full!'
+    "The game is full!"
   end
 end
 
@@ -16,12 +16,12 @@ end
 
 class DrawGameError < Exception
   def to_s
-    'Draw! Nobody wins! :)'
+    "Draw! Nobody wins! :)"
   end
 end
 
 class CellAlreadyMarkedError < Exception
   def to_s
-    'This cell has already been marked!'
+    "This cell has already been marked!"
   end
 end

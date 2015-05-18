@@ -6,8 +6,8 @@ class Game
   attr_reader :player_one, :player_two, :grid
   attr_writer :grid
 
-  def initialize(opt = {})
-    @grid = opt.fetch(:grid)
+  def initialize(options = {})
+    @grid = options[:grid]
   end
 
   def has_two_players?
