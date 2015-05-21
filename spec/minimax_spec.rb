@@ -4,18 +4,19 @@ describe 'Minimax algorithm' do
     let(:another_marker) { :O                             }
     let(:winner)         { double :player, marker: marker }
     let(:game)           { double :game                   }
+    let(:default_depth)  { 0                              }
 
     before(:each) do
       allow(game).to receive(:winner).and_return(winner)
       allow(game).to receive(:has_winner?).and_return(true)
     end
 
-    it 'scores with 1 a win' do
+    it 'scores with 10 a win' do
       solutions_calculator = SolutionsCalculator.new(
         game:   game,
         marker: marker
       ).extend(MinimaxRecommendation)
-      expect(solutions_calculator.final_state_score(game)).to eq 1
+      expect(solutions_calculator.final_state_score(game, default_depth)).to eq 10
     end
 
     it 'scores with -1 a loss' do
@@ -24,7 +25,7 @@ describe 'Minimax algorithm' do
         game:   game,
         marker: another_marker
       ).extend(MinimaxRecommendation)
-      expect(solutions_calculator.final_state_score(game)).to eq -1
+      expect(solutions_calculator.final_state_score(game, default_depth)).to eq -10
     end
 
     it 'scores with 0 a draw' do
@@ -34,7 +35,7 @@ describe 'Minimax algorithm' do
         game:   game,
         marker: another_marker
       ).extend(MinimaxRecommendation)
-      expect(solutions_calculator.final_state_score(game)).to eq 0
+      expect(solutions_calculator.final_state_score(game, default_depth)).to eq 0
     end
   end
 

@@ -1,12 +1,12 @@
 module MinimaxRecommendation
-  def final_state_score(game_state)
-    return 1 if game_state.has_winner? and i_am_winner?(game_state)
+  def final_state_score(game_state, depth)
+    return 10 - depth if game_state.has_winner? and i_am_winner?(game_state)
     return 0 if game_state.draw?
-    return -1
+    return depth -10
   end
 
   def minimax_recommendation
-    minimax(game)
+    minimax(game, 0)
     return best_move
   end
 
@@ -14,8 +14,8 @@ module MinimaxRecommendation
 
   attr_reader :best_move
 
-  def minimax(game)
-    return final_state_score(game) if game.over?
+  def minimax(game, depth)
+    return final_state_score(game, depth) if game.over?
     scores = []
     moves  = []
 
@@ -26,7 +26,7 @@ module MinimaxRecommendation
       rescue GameOverError
       rescue DrawGameError
       end
-      scores << minimax(possible_game)
+      scores << minimax(possible_game, depth + 1)
       moves << move
     end
 
