@@ -68,6 +68,17 @@ class Grid
     end
   end
 
+  def dupdup
+    cloned_grid = Grid.new(size: size)
+    coordinates.each do |coord|
+      cloned_grid.set_content(
+        at_coordinate: coord,
+        content: get_content(coord).dup
+      )
+    end
+    cloned_grid
+  end
+
   private
 
   def available_cells

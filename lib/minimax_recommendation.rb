@@ -5,7 +5,7 @@ module MinimaxRecommendation
     return depth -10
   end
 
-  def minimax_recommendation
+  def minimax_recommendation(game)
     minimax(game, 0)
     return best_move
   end

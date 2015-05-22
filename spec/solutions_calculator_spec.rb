@@ -4,7 +4,7 @@ describe SolutionsCalculator do
   let(:row_class)            { double :row_class           }
   let(:marker)               { :cross                      }
   let(:solutions_calculator) { SolutionsCalculator.new(
-                                  game:   game,
+                                  grid:   grid,
                                   marker: marker
                                   ).extend(Recommendation) }
 

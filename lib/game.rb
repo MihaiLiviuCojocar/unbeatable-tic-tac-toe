@@ -4,7 +4,6 @@ class Game
   WINNER = Proc.new{ |player| player.winner? }
 
   attr_reader :player_one, :player_two, :grid
-  attr_writer :grid
 
   def initialize(options = {})
     @grid = options[:grid]

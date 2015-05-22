@@ -12,8 +12,8 @@ class Ai < Player
     solutions_calculator.recommendation
   end
 
-  def ask_for_minimax_recommendation
-    solutions_calculator.minimax_recommendation
+  def ask_for_minimax_recommendation(game)
+    solutions_calculator.minimax_recommendation(game)
   end
 
   private

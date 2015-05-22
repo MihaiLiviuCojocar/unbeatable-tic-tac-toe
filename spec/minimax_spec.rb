@@ -13,7 +13,7 @@ describe 'Minimax algorithm' do
 
     it 'scores with 10 a win' do
       solutions_calculator = SolutionsCalculator.new(
-        game:   game,
+        grid:   :grid,
         marker: marker
       ).extend(MinimaxRecommendation)
       expect(solutions_calculator.final_state_score(game, default_depth)).to eq 10
@@ -22,7 +22,7 @@ describe 'Minimax algorithm' do
     it 'scores with -1 a loss' do
       allow(game).to receive(:draw?).and_return(false)
       solutions_calculator = SolutionsCalculator.new(
-        game:   game,
+        grid:   :grid,
         marker: another_marker
       ).extend(MinimaxRecommendation)
       expect(solutions_calculator.final_state_score(game, default_depth)).to eq -10
@@ -32,7 +32,7 @@ describe 'Minimax algorithm' do
       allow(game).to receive(:draw?).and_return(true)
       allow(game).to receive(:has_winner?).and_return(false)
       solutions_calculator = SolutionsCalculator.new(
-        game:   game,
+        grid:   :grid,
         marker: another_marker
       ).extend(MinimaxRecommendation)
       expect(solutions_calculator.final_state_score(game, default_depth)).to eq 0
@@ -52,11 +52,11 @@ describe 'Minimax algorithm' do
       p1.marker = :X
       p2.marker = :O
       p1.solutions_calculator = SolutionsCalculator.new(
-          game: game,
+          grid: grid,
           marker: p1.marker
         ).extend(MinimaxRecommendation)
       p2.solutions_calculator = SolutionsCalculator.new(
-          game: game,
+          grid: grid,
           marker: p2.marker
         ).extend(MinimaxRecommendation)
     end
@@ -73,7 +73,7 @@ describe 'Minimax algorithm' do
       moves.each do |move|
         game.make_move(move)
       end
-      expect(p1.solutions_calculator.minimax_recommendation).to eq :C2
+      expect(p1.solutions_calculator.minimax_recommendation(game)).to eq :C2
     end
 
     it 'recommends best move' do
@@ -88,7 +88,7 @@ describe 'Minimax algorithm' do
       moves.each do |move|
         game.make_move(move)
       end
-      expect(p1.solutions_calculator.minimax_recommendation).to eq :B2
+      expect(p1.solutions_calculator.minimax_recommendation(game)).to eq :B2
     end
 
     it 'recommends best move' do
@@ -103,7 +103,7 @@ describe 'Minimax algorithm' do
       moves.each do |move|
         game.make_move(move)
       end
-      expect(p2.solutions_calculator.minimax_recommendation).to eq :C2
+      expect(p2.solutions_calculator.minimax_recommendation(game)).to eq :C2
     end
 
     it 'recommends best move' do
@@ -118,7 +118,7 @@ describe 'Minimax algorithm' do
       moves.each do |move|
         game.make_move(move)
       end
-      expect(p1.solutions_calculator.minimax_recommendation).to eq :C1
+      expect(p1.solutions_calculator.minimax_recommendation(game)).to eq :C1
     end
 
     it 'recommends best move' do
@@ -133,7 +133,7 @@ describe 'Minimax algorithm' do
       moves.each do |move|
         game.make_move(move)
       end
-      expect(p2.solutions_calculator.minimax_recommendation).to eq :C1
+      expect(p2.solutions_calculator.minimax_recommendation(game)).to eq :C1
     end
 
     it 'recommends best move' do
@@ -148,7 +148,7 @@ describe 'Minimax algorithm' do
       moves.each do |move|
         game.make_move(move)
       end
-      expect(p1.solutions_calculator.minimax_recommendation).to eq :C2
+      expect(p1.solutions_calculator.minimax_recommendation(game)).to eq :C2
     end
 
     it 'recommends best move' do
@@ -163,7 +163,7 @@ describe 'Minimax algorithm' do
       moves.each do |move|
         game.make_move(move)
       end
-      expect(p2.solutions_calculator.minimax_recommendation).to eq :A3
+      expect(p2.solutions_calculator.minimax_recommendation(game)).to eq :A3
     end
 
     it 'recommends best move' do
@@ -178,7 +178,7 @@ describe 'Minimax algorithm' do
       moves.each do |move|
         game.make_move(move)
       end
-      expect(p2.solutions_calculator.minimax_recommendation).to eq :C1
+      expect(p2.solutions_calculator.minimax_recommendation(game)).to eq :C1
     end
 
     it 'recommends best move' do
@@ -193,7 +193,7 @@ describe 'Minimax algorithm' do
       moves.each do |move|
         game.make_move(move)
       end
-      expect(p2.solutions_calculator.minimax_recommendation).to eq :C1
+      expect(p2.solutions_calculator.minimax_recommendation(game)).to eq :C1
     end
 
     it 'recommends best move' do
@@ -208,7 +208,7 @@ describe 'Minimax algorithm' do
       moves.each do |move|
         game.make_move(move)
       end
-      expect(p2.solutions_calculator.minimax_recommendation).to eq :B1
+      expect(p2.solutions_calculator.minimax_recommendation(game)).to eq :B1
     end
 
     it 'recommends best move' do
@@ -223,7 +223,7 @@ describe 'Minimax algorithm' do
       moves.each do |move|
         game.make_move(move)
       end
-      expect(p1.solutions_calculator.minimax_recommendation).to eq :A3
+      expect(p1.solutions_calculator.minimax_recommendation(game)).to eq :A3
     end
   end
 end

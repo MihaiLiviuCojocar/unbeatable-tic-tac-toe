@@ -10,15 +10,11 @@ class SolutionsCalculator
     [:A3, :B2, :C1]
   ]
 
-  attr_reader :game, :marker
+  attr_reader :grid, :marker
 
   def initialize(options = {})
-    @game   = options[:game]
+    @grid   = options[:grid]
     @marker = options[:marker]
-  end
-
-  def grid
-    game.grid
   end
 
   def possible_combinations

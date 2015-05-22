@@ -2,7 +2,7 @@ def add_computer_as_player_one
   @game.add_player(Ai.new(grid: @grid))
   @game.player_one.marker = :X
   @game.player_one.solutions_calculator = SolutionsCalculator.new(
-    game:   @game,
+    grid:   @grid,
     marker: @game.player_one.marker
   ).extend(Recommendation)
 end
@@ -11,7 +11,7 @@ def add_computer_as_player_two
   @game.add_player(Ai.new(grid: @grid))
   @game.player_two.marker = :O
   @game.player_two.solutions_calculator = SolutionsCalculator.new(
-    game:   @game,
+    grid:   @grid,
     marker: @game.player_two.marker
   ).extend(Recommendation)
 end
