@@ -21,6 +21,8 @@ Click [here](http://localhost:9292).
 
 Have fun! :)
 
+### Note: UI under conrtuction, though.
+
 ## Running the tests
 
 `rspec`
