@@ -21,7 +21,7 @@ Click [here](http://localhost:9292).
 
 Have fun! :)
 
-### Note: UI under conrtuction, though.
+### Note: UI under construction, though.
 
 ## Running the tests
 
